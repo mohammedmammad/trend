@@ -220,12 +220,12 @@ window.Detectizr = (function(window, navigator, document, undefined) {
 
 	// add version test to Modernizr
 	function addVersionTest(version, major, minor) {
-		if (!!version) {
+		if (version) {
 			version = toCamel(version);
-			if (!!major) {
+			if (major) {
 				major = toCamel(major);
 				addConditionalTest(version + major, true);
-				if (!!minor) {
+				if (minor) {
 					addConditionalTest(version + major + "_" + minor, true);
 				}
 			}
@@ -512,11 +512,11 @@ window.Detectizr = (function(window, navigator, document, undefined) {
 					os.name = "bsd";
 				}
 			}
-			if (!!os.name) {
+			if (os.name) {
 				addConditionalTest(os.name, true);
-				if (!!os.major) {
+				if (os.major) {
 					addVersionTest(os.name, os.major);
-					if (!!os.minor) {
+					if (os.minor) {
 						addVersionTest(os.name, os.major, os.minor);
 					}
 				}
@@ -576,11 +576,11 @@ window.Detectizr = (function(window, navigator, document, undefined) {
 			} else if (is("mozilla/")) {
 				browser.engine = "gecko";
 			}
-			if (!!browser.name) {
+			if (browser.name) {
 				addConditionalTest(browser.name, true);
-				if (!!browser.major) {
+				if (browser.major) {
 					addVersionTest(browser.name, browser.major);
-					if (!!browser.minor) {
+					if (browser.minor) {
 						addVersionTest(browser.name, browser.major, browser.minor);
 					}
 				}
@@ -23115,7 +23115,7 @@ _mejs2.default.Utils.convertSMPTEtoSeconds = convertSMPTEtoSeconds;
 
 //! moment.js
 
-;(function (global, factory) {
+(function (global, factory) {
     typeof exports === 'object' && typeof module !== 'undefined' ? module.exports = factory() :
     typeof define === 'function' && define.amd ? define(factory) :
     global.moment = factory()
@@ -26143,7 +26143,7 @@ _mejs2.default.Utils.convertSMPTEtoSeconds = convertSMPTEtoSeconds;
             } else {
                 duration.milliseconds = input;
             }
-        } else if (!!(match = aspNetRegex.exec(input))) {
+        } else if (match = aspNetRegex.exec(input)) {
             sign = (match[1] === '-') ? -1 : 1;
             duration = {
                 y  : 0,
@@ -26153,7 +26153,7 @@ _mejs2.default.Utils.convertSMPTEtoSeconds = convertSMPTEtoSeconds;
                 s  : toInt(match[SECOND])                       * sign,
                 ms : toInt(absRound(match[MILLISECOND] * 1000)) * sign // the millisecond decimal point is included in the match
             };
-        } else if (!!(match = isoRegex.exec(input))) {
+        } else if (match = isoRegex.exec(input)) {
             sign = (match[1] === '-') ? -1 : (match[1] === '+') ? 1 : 1;
             duration = {
                 y : parseIso(match[2], sign),
@@ -30613,7 +30613,7 @@ function handler(event) {
 /*jshint curly: true, eqeqeq: true, noempty: true, strict: true, undef: true, browser: true */
 /*global jQuery: false */
 
-;(function($, undefined) {
+(function($, undefined) {
     'use strict';
 
 // blank image data-uri bypasses webkit log warning (thx doug jones)
@@ -34554,7 +34554,7 @@ var trim = String.prototype.trim ?
 
  */
 /* global window, document, define, jQuery, setInterval, clearInterval */
-;(function(factory) {
+(function(factory) {
     'use strict';
     if (typeof define === 'function' && define.amd) {
         define(['jquery'], factory);
@@ -39140,7 +39140,7 @@ the specific language governing permissions and limitations under the Apache Lic
             if (evaluated === false) { value = formula(); evaluated = true; }
             return value;
         };
-    };
+    }
 
     function installDebouncedScroll(threshold, element) {
         var notify = debounce(threshold, function (e) { element.trigger("scroll-debounced", e);});
@@ -40688,7 +40688,7 @@ the specific language governing permissions and limitations under the Apache Lic
                 } else {
                     return this.opts.width;
                }
-            };
+            }
 
             var width = resolveContainerWidth.call(this);
             if (width !== null) {
@@ -45643,7 +45643,7 @@ window.dzsap_player_index = 0; // -- the player index on the page
                                 error: function(arg) {
                                     if (typeof window.console != "undefined") {
                                         console.log('Got this from the server: ' + arg, arg);
-                                    };
+                                    }
                                 }
                             });
                         }
@@ -46049,10 +46049,10 @@ window.dzsap_player_index = 0; // -- the player index on the page
                 //console.info(o);
                 if (o.action_audio_play) {
                     action_audio_play = o.action_audio_play;
-                };
+                }
                 if (o.action_audio_play2) {
                     action_audio_play2 = o.action_audio_play2;
-                };
+                }
 
                 if (o.action_audio_end) {
                     action_audio_end = o.action_audio_end;
@@ -47284,7 +47284,7 @@ window.dzsap_player_index = 0; // -- the player index on the page
 
                 setTimeout(function(){
 
-                    cthis.find('.comments-writter-temp-css').remove();;
+                    cthis.find('.comments-writter-temp-css').remove();
                 },300);
                 //cthis.unbind('focusout', blur_ap);
             }
@@ -47518,7 +47518,7 @@ window.dzsap_player_index = 0; // -- the player index on the page
                             error: function(arg) {
                                 if (typeof window.console != "undefined") {
                                     console.log('Got this from the server: ' + arg, arg);
-                                };
+                                }
                             }
                         });
                         pcm_try_to_generate=false;
@@ -49385,7 +49385,7 @@ window.dzsap_player_index = 0; // -- the player index on the page
                         error: function(arg) {
                             if (typeof window.console != "undefined") {
                                 console.log('Got this from the server: ' + arg, arg);
-                            };
+                            }
                             index_extrahtml_toloads--;
                             if (index_extrahtml_toloads == 0) {
                                 cthis.find('.extra-html').addClass('active');
@@ -49459,7 +49459,7 @@ window.dzsap_player_index = 0; // -- the player index on the page
                         error: function(arg) {
                             if (typeof window.console != "undefined") {
                                 console.log('Got this from the server: ' + arg, arg);
-                            };
+                            }
                             index_extrahtml_toloads--;
                             if (index_extrahtml_toloads <= 0) {
                                 cthis.find('.extra-html').addClass('active');
@@ -49528,7 +49528,7 @@ window.dzsap_player_index = 0; // -- the player index on the page
                             if (increment_views == 1) {
                                 ajax_submit_views();
                                 //console.info('response iz '+response);
-                                response = Number(response) + increment_views;;
+                                response = Number(response) + increment_views;
                                 //console.info(response);
                                 increment_views = 2;
                             }
@@ -49547,7 +49547,7 @@ window.dzsap_player_index = 0; // -- the player index on the page
                         error: function(arg) {
                             if (typeof window.console != "undefined") {
                                 console.log('Got this from the server: ' + arg, arg);
-                            };
+                            }
                             index_extrahtml_toloads--;
                             if (index_extrahtml_toloads == 0) {
                                 cthis.find('.extra-html').addClass('active');
@@ -49580,7 +49580,7 @@ window.dzsap_player_index = 0; // -- the player index on the page
                         success: function(response) {
                             if (typeof window.console != "undefined") {
                                 console.log('Got this from the server: ' + response);
-                            };
+                            }
 
 
                             var aux = cthis.find('.star-rating-set-clip').outerWidth() / cthis.find('.star-rating-bg').outerWidth();
@@ -49602,7 +49602,7 @@ window.dzsap_player_index = 0; // -- the player index on the page
                         error: function(arg) {
                             if (typeof window.console != "undefined") {
                                 console.log('Got this from the server: ' + arg, arg);
-                            };
+                            }
 
 
                             var aux = cthis.find('.star-rating-set-clip').outerWidth() / cthis.find('.star-rating-bg').outerWidth();
@@ -49623,7 +49623,7 @@ window.dzsap_player_index = 0; // -- the player index on the page
                         }
                     });
                 }
-            };
+            }
 
 
             function ajax_submit_download(argp) {
@@ -49659,7 +49659,7 @@ window.dzsap_player_index = 0; // -- the player index on the page
                         }
                     });
                 }
-            };
+            }
 
 
             function ajax_submit_views(argp) {
@@ -49709,7 +49709,7 @@ window.dzsap_player_index = 0; // -- the player index on the page
                         error: function(arg) {
                             if (typeof window.console != "undefined") {
                                 console.log('Got this from the server: ' + arg, arg);
-                            };
+                            }
 
 
                             var auxlikes = cthis.find('.counter-hits .the-number').html();
@@ -49754,7 +49754,7 @@ window.dzsap_player_index = 0; // -- the player index on the page
                         error: function(arg) {
                             if (typeof window.console != "undefined") {
                                 console.log('Got this from the server: ' + arg, arg);
-                            };
+                            }
 
 
                             cthis.find('.btn-like').addClass('active');
@@ -49797,7 +49797,7 @@ window.dzsap_player_index = 0; // -- the player index on the page
                         error: function(arg) {
                             if (typeof window.console != "undefined") {
                                 console.log('Got this from the server: ' + arg, arg);
-                            };
+                            }
 
                             cthis.find('.btn-like').removeClass('active');
                             var auxlikes = cthis.find('.counter-likes .the-number').html();
@@ -49891,7 +49891,7 @@ window.dzsap_player_index = 0; // -- the player index on the page
                         error: function(arg) {
                             if (typeof window.console != "undefined") {
                                 console.log('Got this from the server: ' + arg, arg);
-                            };
+                            }
                             _commentsHolder.append(data.postdata);
                         }
                     });
@@ -49930,7 +49930,7 @@ window.dzsap_player_index = 0; // -- the player index on the page
                             ajax_view_submitted = 'on'
                         } else {
                             ajax_view_submitted = 'off';
-                        };
+                        }
                     }
                 }
 
@@ -50870,7 +50870,7 @@ window.dzsap_player_index = 0; // -- the player index on the page
                         play_media({
                             'call_from':'do not autoplay not true'
                         });
-                    };
+                    }
                 }
 
                 if(_cmedia && _cmedia.duration){
@@ -51069,7 +51069,7 @@ window.dzsap_player_index = 0; // -- the player index on the page
 
 
 
-            };
+            }
 
 
 
@@ -51635,7 +51635,7 @@ window.dzsap_player_index = 0; // -- the player index on the page
 
                                         lastarray[i] = lastarray[len - i]/255 * canh;
                                     }
-                                };
+                                }
 
 
 
@@ -51792,8 +51792,8 @@ window.dzsap_player_index = 0; // -- the player index on the page
                                         'opacity': ''
                                     });
                                 }
-                            };
-                        };
+                            }
+                        }
                     }
                 }
                 if (_currTime) {
@@ -54111,7 +54111,7 @@ window.dzsap_player_index = 0; // -- the player index on the page
                         error: function(arg) {
                             if (typeof window.console != "undefined") {
                                 console.log('Got this from the server: ' + arg, arg);
-                            };
+                            }
                         }
                     });
                 }
@@ -54360,7 +54360,7 @@ window.dzsap_player_index = 0; // -- the player index on the page
                 //console.info('handle_frame', finish_viy, duration_viy, target_viy);
 
                 //console.log(duration_viy);
-                target_viy = Number(Math.easeIn(1, begin_viy, change_viy, duration_viy).toFixed(4));;
+                target_viy = Number(Math.easeIn(1, begin_viy, change_viy, duration_viy).toFixed(4));
 
 
                 if (is_ios() == false && is_android() == false) {
@@ -54414,7 +54414,7 @@ window.dzsap_player_index = 0; // -- the player index on the page
                         error: function(arg) {
                             if (typeof window.console != "undefined") {
                                 console.log('Got this from the server: ' + arg, arg);
-                            };
+                            }
                         }
                     });
                 }
@@ -54989,27 +54989,27 @@ function is_android_good() {
 function is_ie() {
     if (navigator.appVersion.indexOf("MSIE") != -1) {
         return true;
-    };
+    }
     return false;
-};
+}
 
 function is_firefox() {
     if (navigator.userAgent.indexOf("Firefox") != -1) {
         return true;
-    };
+    }
     return false;
-};
+}
 
 function is_opera() {
     if (navigator.userAgent.indexOf("Opera") != -1) {
         return true;
-    };
+    }
     return false;
-};
+}
 
 function is_chrome() {
     return navigator.userAgent.toLowerCase().indexOf('chrome') > -1;
-};
+}
 
 function is_safari() {
     return Object.prototype.toString.call(window.HTMLElement).indexOf('Constructor') > 0;
@@ -55017,21 +55017,21 @@ function is_safari() {
 
 function version_ie() {
     return parseFloat(navigator.appVersion.split("MSIE")[1]);
-};
+}
 
 function version_firefox() {
     if (/Firefox[\/\s](\d+\.\d+)/.test(navigator.userAgent)) {
         var aversion = new Number(RegExp.$1);
         return (aversion);
-    };
-};
+    }
+}
 
 function version_opera() {
     if (/Opera[\/\s](\d+\.\d+)/.test(navigator.userAgent)) {
         var aversion = new Number(RegExp.$1);
         return (aversion);
-    };
-};
+    }
+}
 
 function is_ie8() {
     if (is_ie() && version_ie() < 9) {
@@ -55157,22 +55157,22 @@ var MD5 = function(string) {
     function FF(a, b, c, d, x, s, ac) {
         a = AddUnsigned(a, AddUnsigned(AddUnsigned(F(b, c, d), x), ac));
         return AddUnsigned(RotateLeft(a, s), b);
-    };
+    }
 
     function GG(a, b, c, d, x, s, ac) {
         a = AddUnsigned(a, AddUnsigned(AddUnsigned(G(b, c, d), x), ac));
         return AddUnsigned(RotateLeft(a, s), b);
-    };
+    }
 
     function HH(a, b, c, d, x, s, ac) {
         a = AddUnsigned(a, AddUnsigned(AddUnsigned(H(b, c, d), x), ac));
         return AddUnsigned(RotateLeft(a, s), b);
-    };
+    }
 
     function II(a, b, c, d, x, s, ac) {
         a = AddUnsigned(a, AddUnsigned(AddUnsigned(I(b, c, d), x), ac));
         return AddUnsigned(RotateLeft(a, s), b);
-    };
+    }
 
     function ConvertToWordArray(string) {
         var lWordCount;
@@ -55195,7 +55195,7 @@ var MD5 = function(string) {
         lWordArray[lNumberOfWords - 2] = lMessageLength << 3;
         lWordArray[lNumberOfWords - 1] = lMessageLength >>> 29;
         return lWordArray;
-    };
+    }
 
     function WordToHex(lValue) {
         var WordToHexValue = "",
@@ -55207,7 +55207,7 @@ var MD5 = function(string) {
             WordToHexValue = WordToHexValue + WordToHexValue_temp.substr(WordToHexValue_temp.length - 2, 2);
         }
         return WordToHexValue;
-    };
+    }
 
     function Utf8Encode(string) {
         string = string.replace(/\r\n/g, "\n");
@@ -55230,7 +55230,7 @@ var MD5 = function(string) {
         }
 
         return utftext;
-    };
+    }
 
     var x = Array();
     var k, AA, BB, CC, DD, a, b, c, d;
@@ -57087,7 +57087,7 @@ jQuery(function() {
 
 
 /*! http://mths.be/punycode v1.2.4 (C) by @mathias | MIT License*/
-;(function(root) {
+(function(root) {
 
 	/** Detect free variables */
 	var freeExports = typeof exports == 'object' && exports;
@@ -59839,7 +59839,7 @@ jQuery(document).ready(function( $ ) {
 
 /* define a single entry in the Window name space, where each module could hook up */
 
-;(function(jQuery, window, document){
+(function(jQuery, window, document){
 
 
     // When DOM is load, create our Arturia as the minimal window namespace pollution
@@ -59900,7 +59900,7 @@ jQuery(document).ready(function( $ ) {
 //@NOcodekit-append "arturia/dependency/soundcloud.player.api.js"
 //@NOcodekit-append "arturia/sc-player.2.0.js"
 
-;(function(jQuery, window, document){
+(function(jQuery, window, document){
 
     'use strict';
     jQuery(document).ready(function($) {
@@ -60387,7 +60387,7 @@ jQuery(document).ready(function( $ ) {
 
 })(jQuery, window, document);
 
-;(function(jQuery, window, document){
+(function(jQuery, window, document){
 
     'use strict';
     jQuery(document).ready(function($) {
@@ -60987,7 +60987,7 @@ jQuery(document).ready(function( $ ) {
 
 })(jQuery, window, document);
 
-;(function(jQuery, window, document){
+(function(jQuery, window, document){
 
     'use strict';
 
@@ -61015,7 +61015,7 @@ jQuery(document).ready(function( $ ) {
 //@codekit-append "menu/arturia-menu-revert.js"
 //@codekit-append "menu/arturia-menu-search.js"
 
-;(function(jQuery, window, document){
+(function(jQuery, window, document){
 
     jQuery(document).ready(function($) {
         /**
@@ -61190,7 +61190,7 @@ jQuery(document).ready(function( $ ) {
 
 })(jQuery, window, document);
 
-;(function(jQuery, window, document){
+(function(jQuery, window, document){
 
     jQuery(document).ready(function($) {
 
@@ -61244,7 +61244,7 @@ jQuery(document).ready(function( $ ) {
 
 })(jQuery, window, document);
 
-;(function(jQuery, window, document){
+(function(jQuery, window, document){
 
     jQuery(document).ready(function($) {
            /**
@@ -61308,7 +61308,7 @@ jQuery(document).ready(function( $ ) {
 
 })(jQuery, window, document);
 
-;(function(jQuery, window, document){
+(function(jQuery, window, document){
 
     'use strict';
 
@@ -62251,7 +62251,7 @@ jQuery(document).ready(function($){
  *      a  @data-src-hover attribute to specify a src url to show on hover
  *   or a  @data-suffix-hover attribute to compute hover image src as  <src><suffix>.<original_src_extension>
  */
-;(function ( $, window, document, undefined ) {
+(function ( $, window, document, undefined ) {
 
     // Create the defaults once
     var plugin_name = "imageSwapper",
@@ -71893,14 +71893,14 @@ function lsShowNotice(lsobj,issue,ver){
 
 		for (var i = properties.length - 1; i >= 0; i--){
 			s3d1 = s3d1 ? s3d1 : testEl[0].style[properties[i]] != undefined;
-		};
+		}
 
 		// preserve 3D test
 
 		for (var i = transform.length - 1; i >= 0; i--){
 			testEl.css( 'transform-style', 'preserve-3d' );
 			s3d2 = s3d2 ? s3d2 : testEl[0].style[transform[i]] == 'preserve-3d';
-		};
+		}
 
 		// If browser has perspective capability and it is webkit, we must check it with this solution because Chrome can give false positive result if GPU acceleration is disabled
 

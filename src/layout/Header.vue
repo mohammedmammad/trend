@@ -4,7 +4,7 @@
             <div class="row">
                 <div class="col-lg-1 col-md-1 col-sm-2 col-xs-2">
                     <div class="nav_logo">
-                        <router-link  to="/" class="logo-nav logonaveditwidth">
+                        <router-link  :to="`/${$i18n.locale}`" class="logo-nav logonaveditwidth">
                             <img src="@/assets/img/logowhite.webp" />
                         </router-link>
                     </div>
@@ -24,7 +24,7 @@
                                
 
                                 <li class="tooltip">
-                                    <router-link to="/department" class="search1">
+                                    <router-link :to="`/${$i18n.locale}/department`" class="search1">
                                         <img src="@/assets/img/asm/baseline-filter.png" />
                                         <span class="tooltiptext">الاقسام</span>
                                     </router-link>
@@ -153,9 +153,13 @@
 
                                     </li>
                                     <li>
-                                        <a href="#" class="lang">
+                                        <a @click.prevent="setLocale('en')" class="lang" v-if="$i18n.locale == 'ar'">
                                             <span>اللغة</span>
                                             <img src="@/assets/img/united-kingdom.webp" alt="English">
+                                        </a>
+                                        <a @click.prevent="setLocale('ar')" class="lang" v-else>
+                                            <span>اللغة</span>
+                                            <img src="@/assets/img/flag.webp" alt="Arabic">
                                         </a>
                                     </li>
                                     <li>
@@ -191,6 +195,16 @@ export default {
     }, function() {
         window.$(this).find('.dropdown-menu').first().stop(true, true).delay(200).fadeOut(500);
     });
+  },
+  methods:{
+      setLocale(locale){
+          this.$i18n.locale = locale;
+          this.$router.push({
+              params: {
+                  lang: locale
+              }
+          })
+      }
   }
 }
 </script>
