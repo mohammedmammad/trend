@@ -4,8 +4,24 @@
   </div>
 </template>
 <script>
+// import mixins from '@/mixins';
 export default {
   name: 'Department',
+  // mixins: [mixins],
+  data() {
+      return {
+        // post: [],
+      };
+  },
+  mounted() {
+    // this.handleRequest(
+    //     'COMMON',
+    //     'GET_POST'
+    // ).then((res) => {
+    //   this.post = res
+    //   console.log("test",this.post)
+    // });
+  },
   methods:{
   },
 }

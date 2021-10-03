@@ -7,7 +7,13 @@
 <script>
 export default {
   name: 'Home',
+  mounted() {
+    // this.$store.dispatch('COMMON', { service: 'GET_USER_DETAILS' });
+  },
   computed:{
+    // getUserDetails(){
+    //   return this.$store.getters.getUserDetails
+    // }
   },
   methods:{
   },
