@@ -12,10 +12,13 @@ export default {
                         reqPayload: reqPayload
                     })
                     .then(res => {
+                        if (res.status != 200) {
+                            this.handleErrors(res.data.errors[Object.keys(res.data.errors)[0]])
+                        }
                         resolve(res);
                     })
                     .catch(error => {
-                        this.handleErrors(error);
+                        this.handleErrors(error.message);
                         reject(false);
                     })
                     .finally(() => {
@@ -23,18 +26,16 @@ export default {
                     });
             });
         },
-        handleErrors(messages) { 
-            if (messages !== null && messages !== false) {
-                this.$store.dispatch('STORE_SAVE_ERRORS', {
-                    styled: 'filled',
-                    type: 'error',
-                    title: 'حدث خطأ',
-                    message: messages.message
-                });
-                setTimeout(() => {
-                    this.$store.dispatch('STORE_SAVE_ERRORS', null);
-                }, 5000);
-            }
-        }
+        handleErrors(messages) {
+            this.$store.dispatch('STORE_SAVE_ERRORS', {
+                styled: 'filled',
+                type: 'error',
+                title: 'حدث خطأ',
+                message: messages
+            });
+            setTimeout(() => {
+                this.$store.dispatch('STORE_SAVE_ERRORS', null);
+            }, 5000);
+        },
     }
 };

@@ -9,14 +9,21 @@
     "i18n:report": "vue-cli-service i18n:report --src \"./src/**/*.?(js|vue)\" --locales \"./src/locales/**/*.json\""
   },
   "dependencies": {
+    "@fortawesome/fontawesome-svg-core": "^6.1.1",
+    "@fortawesome/free-regular-svg-icons": "^6.1.1",
+    "@fortawesome/free-solid-svg-icons": "^6.1.1",
+    "@fortawesome/vue-fontawesome": "^2.0.6",
     "axios": "^0.22.0",
     "bootstrap": "^4.6.0",
     "core-js": "^3.6.5",
     "jquery": "^3.6.0",
+    "moment": "^2.29.1",
     "popper.js": "^1.16.1",
     "vue": "^2.6.11",
     "vue-i18n": "^8.26.3",
+    "vue-rate": "^2.5.0",
     "vue-router": "^3.2.0",
+    "vuelidate": "^0.7.7",
     "vuex": "^3.4.0"
   },
   "devDependencies": {

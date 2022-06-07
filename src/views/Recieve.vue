@@ -36,10 +36,10 @@
     <div class="custome-nav background-white">
       <div class="container">
         <div class="d-flex justify-content-between">
-          <router-link :to="`/${$i18n.locale}`" class="nav-link active">
+          <router-link :to="`/${$i18n.locale}`" class="nav-link">
             طلبات مقدمة
           </router-link>
-          <router-link :to="`/${$i18n.locale}/recieve`" class="nav-link">
+          <router-link :to="`/${$i18n.locale}/recieve`" class="nav-link active">
             طلبات مستقبلة
           </router-link>
         </div>
@@ -77,7 +77,7 @@
             </div>
             <div class="card-data">
               <div class="mb-2">
-                <span>اسم المعلن :</span>
+                <span>اسم العميل :</span>
                 <span class="mr-1">محمد حماد سند حماد</span>
               </div>
               <div class="main-color">
@@ -102,7 +102,7 @@
               <span>طلبات الاعلان قيد التنفيذ</span>
             </div>
             <router-link
-              :to="`/${$i18n.locale}/details`"
+              :to="`/${$i18n.locale}/recievedetails`"
               class="main-color border-right-action px-2"
             >
               <span class="ml-2"><u>تفاصيل طلب الاعلان</u></span>
@@ -140,7 +140,7 @@
             </div>
             <div class="card-data">
               <div class="mb-2">
-                <span>اسم المعلن :</span>
+                <span>اسم العميل :</span>
                 <span class="mr-1">محمد حماد سند حماد</span>
               </div>
               <div class="main-color">
@@ -165,7 +165,7 @@
               <span>طلبات الاعلان قيد التنفيذ</span>
             </div>
             <router-link
-              :to="`/${$i18n.locale}/details`"
+              :to="`/${$i18n.locale}/recievedetails`"
               class="main-color border-right-action px-2"
             >
               <span class="ml-2"><u>تفاصيل طلب الاعلان</u></span>
@@ -203,7 +203,7 @@
             </div>
             <div class="card-data">
               <div class="mb-2">
-                <span>اسم المعلن :</span>
+                <span>اسم العميل :</span>
                 <span class="mr-1">محمد حماد سند حماد</span>
               </div>
               <div class="main-color">
@@ -228,7 +228,7 @@
               <span>طلبات الاعلان قيد التنفيذ</span>
             </div>
             <router-link
-              :to="`/${$i18n.locale}/details`"
+              :to="`/${$i18n.locale}/recievedetails`"
               class="main-color border-right-action px-2"
             >
               <span class="ml-2"><u>تفاصيل طلب الاعلان</u></span>
@@ -266,7 +266,7 @@
             </div>
             <div class="card-data">
               <div class="mb-2">
-                <span>اسم المعلن :</span>
+                <span>اسم العميل :</span>
                 <span class="mr-1">محمد حماد سند حماد</span>
               </div>
               <div class="main-color">
@@ -291,7 +291,7 @@
               <span>طلبات الاعلان قيد التنفيذ</span>
             </div>
             <router-link
-              :to="`/${$i18n.locale}/details`"
+              :to="`/${$i18n.locale}/recievedetails`"
               class="main-color border-right-action px-2"
             >
               <span class="ml-2"><u>تفاصيل طلب الاعلان</u></span>
@@ -329,7 +329,7 @@
             </div>
             <div class="card-data">
               <div class="mb-2">
-                <span>اسم المعلن :</span>
+                <span>اسم العميل :</span>
                 <span class="mr-1">محمد حماد سند حماد</span>
               </div>
               <div class="main-color">
@@ -354,7 +354,7 @@
               <span>طلبات الاعلان قيد التنفيذ</span>
             </div>
             <router-link
-              :to="`/${$i18n.locale}/details`"
+              :to="`/${$i18n.locale}/recievedetails`"
               class="main-color border-right-action px-2"
             >
               <span class="ml-2"><u>تفاصيل طلب الاعلان</u></span>
@@ -392,7 +392,7 @@
             </div>
             <div class="card-data">
               <div class="mb-2">
-                <span>اسم المعلن :</span>
+                <span>اسم العميل :</span>
                 <span class="mr-1">محمد حماد سند حماد</span>
               </div>
               <div class="main-color">
@@ -417,7 +417,7 @@
               <span>طلبات الاعلان قيد التنفيذ</span>
             </div>
             <router-link
-              :to="`/${$i18n.locale}/details`"
+              :to="`/${$i18n.locale}/recievedetails`"
               class="main-color border-right-action px-2"
             >
               <span class="ml-2"><u>تفاصيل طلب الاعلان</u></span>

@@ -1,42 +1,70 @@
-import Vue from 'vue'
-import VueRouter from 'vue-router'
-import Home from '../views/Home.vue'
-import i18n from '../i18n'
+import Vue from "vue";
+import VueRouter from "vue-router";
+import Home from "../views/Home.vue";
+import i18n from "../i18n";
 
-Vue.use(VueRouter)
+Vue.use(VueRouter);
 
 const routes = [
   {
-    path:'/',
-    redirect:`/${i18n.locale}`
+    path: "/",
+    redirect: `/${i18n.locale}`,
   },
   {
-    path: "/:lang",
+    path: "/ar",
+    alias: "/en",
     component: {
-      render (c) {return c('router-view')}
+      render(c) {
+        return c("router-view");
+      },
     },
-    children:[
+    children: [
       {
-        path: '/',
-        name: 'Home',
-        component: Home
+        path: "/",
+        name: "Home",
+        component: Home,
       },
       {
-        path: 'department',
-        name: 'Department',
-        // route level code-splitting
-        // this generates a separate chunk (about.[hash].js) for this route
-        // which is lazy-loaded when the route is visited.
-        component: () => import(/* webpackChunkName: "about" */ '../views/Department.vue')
-      }
-    ]
-  }
-]
+        path: "recieve",
+        name: "Recieve",
+        component: () => import("../views/Recieve.vue"),
+      },
+      {
+        path: "details",
+        name: "Details",
+        component: () => import("../views/Details.vue"),
+      },
+      {
+        path: "recievedetails",
+        name: "Recievedetails",
+        component: () => import("../views/Recievedetails.vue"),
+      },
+      {
+        path: "create",
+        name: "Create",
+        component: () => import("../views/Create.vue"),
+      },
+      {
+        path: "support",
+        name: "Support",
+        component: () => import("../views/Support.vue"),
+      },
+      {
+        path: "history",
+        name: "History",
+        component: () => import("../views/History.vue"),
+      },
+    ],
+  },
+];
 
 const router = new VueRouter({
-  mode: 'history',
+  mode: "history",
   base: process.env.BASE_URL,
-  routes
-})
+  routes,
+  scrollBehavior() {
+    return { x: 0, y: 0 };
+  },
+});
 
-export default router
+export default router;
