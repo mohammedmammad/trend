@@ -19,6 +19,7 @@
     "jquery": "^3.6.0",
     "moment": "^2.29.1",
     "popper.js": "^1.16.1",
+    "sass": "^1.52.2",
     "vue": "^2.6.11",
     "vue-i18n": "^8.26.3",
     "vue-rate": "^2.5.0",
@@ -35,7 +36,6 @@
     "babel-eslint": "^10.1.0",
     "eslint": "^6.7.2",
     "eslint-plugin-vue": "^6.2.2",
-    "node-sass": "^4.12.0",
     "sass-loader": "^8.0.2",
     "vue-cli-plugin-i18n": "~2.2.0",
     "vue-template-compiler": "^2.6.11"
