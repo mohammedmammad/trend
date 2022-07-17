@@ -1,13 +1,21 @@
 import { required } from "vuelidate/lib/validators";
-
-const registerValidation = {
+const createValidation = {
   form: {
-    phone: {
+    type_id: {
       required,
     },
-    password: {
+    ads_request_id: {
+      required,
+    },
+    to_user_id: {
+      required,
+    },
+    recovery: {
+      required,
+    },
+    details: {
       required,
     },
   },
 };
-export { registerValidation };
+export { createValidation };

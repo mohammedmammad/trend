@@ -54,10 +54,13 @@
           </div>
           <div class="row py-2">
             <div class="col-12 mb-2">
-              <div class="form-group mb-1">
+              <div
+                class="form-group mb-1"
+                :class="{ 'is-invalid': $v.form.type_id.$error }"
+              >
                 <select
                   class="form-control custome-form-control"
-                  v-model="form.type"
+                  v-model.trim="$v.form.type_id.$model"
                 >
                   <option value="" select>نوع التنازع</option>
                   <option
@@ -69,12 +72,21 @@
                   </option>
                 </select>
               </div>
+              <div
+                class="invalid-feedback"
+                v-if="!$v.form.type_id.required & $v.form.type_id.$error"
+              >
+                هذا الحقل مطلوب
+              </div>
             </div>
             <div class="col-4 mb-2">
-              <div class="form-group mb-1">
+              <div
+                class="form-group mb-1"
+                :class="{ 'is-invalid': $v.form.ads_request_id.$error }"
+              >
                 <select
                   class="form-control custome-form-control"
-                  v-model="form.number"
+                  v-model.trim="$v.form.ads_request_id.$model"
                 >
                   <option value="" select>رقم الطلب</option>
                   <option
@@ -86,12 +98,24 @@
                   </option>
                 </select>
               </div>
+              <div
+                class="invalid-feedback"
+                v-if="
+                  !$v.form.ads_request_id.required &
+                  $v.form.ads_request_id.$error
+                "
+              >
+                هذا الحقل مطلوب
+              </div>
             </div>
             <div class="col-8 mb-2">
-              <div class="form-group mb-1">
+              <div
+                class="form-group mb-1"
+                :class="{ 'is-invalid': $v.form.to_user_id.$error }"
+              >
                 <select
                   class="form-control custome-form-control"
-                  v-model="form.name"
+                  v-model.trim="$v.form.to_user_id.$model"
                 >
                   <option value="" select>اسم طرف التنازع</option>
                   <option
@@ -103,12 +127,28 @@
                   </option>
                 </select>
               </div>
+              <div
+                class="invalid-feedback"
+                v-if="!$v.form.to_user_id.required & $v.form.to_user_id.$error"
+              >
+                هذا الحقل مطلوب
+              </div>
             </div>
             <div class="col-12 mb-2">
-              <textarea
-                class="form-control custome-input custome-input-bg-white"
-                placeholder="وصف سبب التنازع"
-              ></textarea>
+              <div :class="{ 'is-invalid': $v.form.details.$error }">
+                <textarea
+                  class="form-control custome-input custome-input-bg-white mb-2"
+                  placeholder="وصف سبب التنازع"
+                  rows="4"
+                  v-model.trim="$v.form.details.$model"
+                ></textarea>
+              </div>
+              <div
+                class="invalid-feedback"
+                v-if="!$v.form.details.required & $v.form.details.$error"
+              >
+                هذا الحقل مطلوب
+              </div>
             </div>
             <div class="col-12 my-2 main-color">
               <h6>أدخل مبلغ طلب الاسترداد</h6>
@@ -131,12 +171,12 @@
                 <span class="gray-color text-card pr-0 pl-1">الى</span>
                 <span class="value-card">15000</span>
               </div>
-              <div>
+              <div :class="{ 'is-invalid': $v.form.recovery.$error }">
                 <input
                   type="text"
                   class="form-control special-input"
-                  placeholder="القيمة"
-                  value="456543"
+                  placeholder="......."
+                  v-model.trim="$v.form.recovery.$model"
                 />
               </div>
             </div>
@@ -148,29 +188,84 @@
             </div>
             <div class="col-9 mb-2">
               <input
+                readonly
                 type="text"
                 class="form-control custome-input"
                 placeholder="اضافة اسم/وصف/رابط ... المرافق"
               />
             </div>
             <div class="col-3 mb-2">
-              <div
-                class="
-                  form-control
-                  custome-input
-                  d-flex
-                  justify-content-around
-                  align-items-center
-                  px-1
-                "
-              >
-                <font-awesome-icon icon="fa-solid fa-link" />
-                <font-awesome-icon icon="fa-solid fa-circle-plus" />
+              <label for="attachment" class="d-block">
+                <div
+                  class="
+                    form-control
+                    custome-input
+                    d-flex
+                    justify-content-around
+                    align-items-center
+                    px-1
+                  "
+                >
+                  <font-awesome-icon icon="fa-solid fa-link" />
+                  <font-awesome-icon icon="fa-solid fa-circle-plus" />
+                </div>
+              </label>
+              <input
+                @change="uploadFile($event)"
+                multiple
+                ref="file"
+                type="file"
+                id="attachment"
+                name="attachment"
+                class="d-none"
+              />
+            </div>
+            <div class="col-12" v-if="url.length > 0">
+              <div class="row" v-for="(file, index) in url" :key="file.index">
+                <div class="col-9 mb-2">
+                  <input
+                    readonly
+                    type="text"
+                    class="form-control custome-input custome-input-bg-white"
+                    placeholder="أدخل اسم/وصف/رابط ... المرافق"
+                    :value="file.name"
+                  />
+                </div>
+                <div class="col-3 mb-2">
+                  <div class="content-upload-image">
+                    <span
+                      class="cancel-upload"
+                      @click="deleteFile(index, file.index)"
+                    >
+                      <svg
+                        xmlns="http://www.w3.org/2000/svg"
+                        width="20"
+                        height="20"
+                        viewBox="0 0 24 24"
+                        fill="none"
+                        stroke="red"
+                        stroke-width="2"
+                        stroke-linecap="round"
+                        stroke-linejoin="round"
+                        class="feather feather-x-circle"
+                      >
+                        <circle cx="12" cy="12" r="10" />
+                        <line x1="15" y1="9" x2="9" y2="15" />
+                        <line x1="9" y1="9" x2="15" y2="15" />
+                      </svg>
+                    </span>
+                    <img :src="file.url" />
+                  </div>
+                </div>
               </div>
             </div>
             <div class="col-12 d-flex justify-content-around mt-3">
-              <button type="button" class="main-button">حفظ</button>
-              <button type="button" class="cancel-button">الغاء</button>
+              <button type="button" class="main-button" @click="create">
+                حفظ
+              </button>
+              <button type="button" class="cancel-button" @click="reset">
+                الغاء
+              </button>
             </div>
           </div>
         </div>
@@ -181,24 +276,70 @@
 
 <script>
 import mixins from "@/mixins";
+import { createValidation } from "@/constants/validation.js";
+import { validationMixin } from "vuelidate";
 export default {
   name: "Create",
-  mixins: [mixins],
+  mixins: [validationMixin, mixins],
+  validations: createValidation,
   components: {},
   data() {
     return {
       forms: {},
+      url: [],
       form: {
-        type: "",
-        number: "",
-        name: "",
-        descraption: null,
+        type_id: "",
+        ads_request_id: "",
+        to_user_id: "",
+        recovery: "",
+        details: null,
+        attachments: [],
       },
     };
   },
   watch: {},
   computed: {},
   methods: {
+    create() {
+      let formData = new FormData();
+      for (var i = 0; i < this.$refs.file.files.length; i++) {
+        if (!this.deleteFiles.includes(i)) {
+          let file = this.$refs.file.files[i];
+          console.log(file);
+          formData.append("attachment-" + i, file);
+        }
+      }
+      formData.append("type_id", this.form.type_id);
+      formData.append("category_id", this.form.category_id);
+      formData.append("details", this.form.details);
+      formData.append("type", this.form.type);
+      this.$v.$touch();
+      if (this.$v.$invalid) return false;
+      this.handleRequest("COMMON", "CREATE", formData).then((res) => {
+        if (res.status == 200) {
+          this.$store.dispatch("STORE_SAVE_ERRORS", {
+            styled: "filled",
+            type: "success",
+            title: "عملية ناجحة",
+            message: res.message,
+          });
+          setTimeout(() => {
+            this.$store.dispatch("STORE_SAVE_ERRORS", null);
+          }, 5000);
+        }
+      });
+    },
+    reset() {
+      this.form = {
+        type_id: "",
+        ads_request_id: "",
+        to_user_id: "",
+        recovery: "",
+        details: null,
+        attachments: [],
+      };
+      this.$v.$reset();
+    },
     getRequestes() {
       this.handleRequest("COMMON", "GET_FORMS").then((res) => {
         if ((res.status == 200) & (res.data != null)) {
@@ -206,6 +347,21 @@ export default {
           this.forms = res.data;
         }
       });
+    },
+    uploadFile(e) {
+      for (let i = 0; i < e.target.files.length; i++) {
+        let doc = e.target.files[i];
+        let obj = {
+          index: i,
+          url: URL.createObjectURL(doc),
+          name: e.target.files[i].name,
+        };
+        this.url.push(obj);
+      }
+    },
+    deleteFile(index, fileIndex) {
+      this.deleteFiles.push(fileIndex);
+      this.url.splice(index, 1);
     },
   },
   mounted() {

@@ -10,4 +10,7 @@ export default {
   GET_FORMS() {
     return Api().get("dispute_requests_form");
   },
+  CREATE(formData) {
+    return Api().post("dispute_requests", formData);
+  },
 };
