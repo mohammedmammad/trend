@@ -3,7 +3,7 @@ $sub-main-color:#47CCDE;
 $gray-color: #707070 ;
 $orange-color: #D37A47;
 $background-white: #F5F5F5 ;
-$radius: 3px;
+$radius: 4px;
 @import "./general.scss";
 body {
     font-family: 'Vazirmatn', sans-serif;
@@ -11,7 +11,7 @@ body {
     margin: 0 ;
     font-style: normal;
     font-weight: 300;
-    font-size: 12px;
+    font-size: 13px;
     line-height: 1.6;
     color: #333;
     text-align: right;
@@ -27,7 +27,7 @@ header{
     align-items: center;
     .filter-box{
         position: relative;
-        width: calc(100% - 60px);
+        width: calc(100% - 80px);
         .form-control{
             border: 0 !important;
             // height: calc(1.5em + 0.5rem);
@@ -52,16 +52,30 @@ header{
         }
     }
     .back-btn{
-        display: block;
         background-color: #9AC3E8;
         border: 0;
         color: #fff;
         font-size: 20px;
         width: 38px;
         height: 38px;
-        line-height: 38px;
-        text-align: center;
+        display: flex;
+        justify-content: center;
+        align-items: center;
         border-radius: 50%;
+    }
+}
+.content-upload-image{
+    width: 100%;
+    height: calc(1.5em + 0.75rem + 10px);
+    position: relative;
+    .cancel-upload{
+        position: absolute;
+        top: 2px;
+        left: 2px;
+    }
+    img{
+        width: 100%;
+        height: 100%;
     }
 }
 .custome-nav{
@@ -70,7 +84,7 @@ header{
     .nav-link{
         color: $main-color;
         padding: 0.2rem 2rem;
-        border-radius: 3px;
+        border-radius: $radius;
         &.active{
             background-color: $main-color;
             color: #fff;
@@ -170,3 +184,76 @@ header{
         }
     }
 }
+.user-record{
+    border: 1px solid $orange-color;
+}
+.user-visitor{
+    border: 1px solid $sub-main-color;
+}
+/********************************** Start LOADER *****************************/
+.loader {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    margin: 0 auto;
+    width: 100vw;
+    height: 100vh;
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+    -webkit-box-pack: center;
+    -ms-flex-pack: center;
+    justify-content: center;
+    -webkit-box-align: center;
+    -ms-flex-align: center;
+    align-items: center;
+    background-color: rgba(255, 255, 255, 0.5);
+    z-index: 999999999999;
+    direction: ltr;
+}
+.loading {
+    border-radius: 50%;
+    width: 80px;
+    height: 80px;
+    border: 8px solid $main-color;
+    border-top: #ddd;
+    margin: 0 auto;
+    -webkit-animation: spin 2s infinite;
+    animation: spin 2s infinite;
+    -webkit-animation-timing-function: linear;
+    animation-timing-function: linear;
+}
+@-webkit-keyframes spin {
+    0% {
+        -webkit-transform: rotate(0deg);
+        transform: rotate(0deg);
+    }
+    50% {
+        -webkit-transform: rotate(180deg);
+        transform: rotate(180deg);
+        border: 8px solid $main-color;
+        border-top: #ddd;
+    }
+    100% {
+        -webkit-transform: rotate(359deg);
+        transform: rotate(359deg);
+    }
+}
+@keyframes spin {
+    0% {
+        -webkit-transform: rotate(0deg);
+        transform: rotate(0deg);
+    }
+    50% {
+        -webkit-transform: rotate(180deg);
+        transform: rotate(180deg);
+        border: 8px solid $main-color;
+        border-top: #ddd;
+    }
+    100% {
+        -webkit-transform: rotate(359deg);
+        transform: rotate(359deg);
+    }
+}
+/************************************************* END LOADER *****************************************/

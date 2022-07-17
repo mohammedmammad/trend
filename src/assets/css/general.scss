@@ -38,17 +38,23 @@
 }
 .custome-input,
 .custome-input[readonly]{
+    height: calc(1.5em + 0.75rem + 10px);
     width: 100% ;
     background: none  !important;
     border-color: $main-color !important;
     color: $main-color !important;
     box-shadow:none !important;
-    font-size: 13px !important
+    font-size: 14px !important
 }
 textarea.custome-input{
     border-style: dashed !important;
+    height: 100px !important;
 }
-.custome-input-bg-white{
+.cancel-upload{
+    cursor: pointer;
+}
+.custome-input-bg-white,
+.custome-input-bg-white[readonly]{
     background: #fff !important;
 }
 .special-input{
@@ -62,7 +68,7 @@ textarea.custome-input{
     background-color: $main-color;
     color: #fff;
     padding: 0.2rem 2rem;
-    border-radius: 3px;
+    border-radius: $radius;
     border-color: $main-color;
     border: 0;
     box-shadow: 0 .125rem .25rem rgba(0,0,0,.075)!important;
@@ -85,7 +91,7 @@ textarea.custome-input{
     background-color: #EEE;
     color: $main-color;
     padding: 0.2rem 2rem;
-    border-radius: 3px;
+    border-radius: $radius;
     border: 0;
     box-shadow: 0 .125rem .25rem rgba(0,0,0,.075)!important;
 }
@@ -95,11 +101,18 @@ textarea.custome-input{
     border-radius: 20px;
     width: fit-content;
 }
+.main-btn{
+    background-color: $main-color;
+    color: #fff;
+    padding: 4px 15px;
+    border-radius: 20px;
+    width: fit-content;
+}
 .tabs{
     .new-tab{
         color: $main-color;
         padding: 5px 25px;
-        font-size: 13px;    
+        font-size: 14px;    
         border-radius: 20px;
         background-color: #FFF;
         transition: all .3s ease-in-out;
@@ -112,24 +125,34 @@ textarea.custome-input{
 .text-14{
     font-size:14px
 }
+.custome-form-check{
+    padding: 5px 30px;
+    border: 1px solid $main-color ;
+    border-radius:$radius;
+    label{
+        margin-right: 20px;
+        color: $main-color;
+    }
+}
 .special-btn{
     background-color: #979797;
     color: #FFFF00;
-    padding: 0.2rem 1rem;
+    padding: 0.4rem 1rem;
     border-radius: 20px;
     border: 0;
     box-shadow: 0 .125rem .25rem rgba(0,0,0,.075)!important;
     line-height: 1;
 }
 .special-btn-rad{
-    border-radius: 3px;
+    border-radius: $radius;
 }
 .custome-form-control , .custome-form-control:focus{
+    height: calc(1.5em + 0.75rem + 10px);
     outline: none;
     box-shadow: none;
     border-color: $main-color;
     color:$gray-color;
-    font-size: 13px;
+    font-size: 14px;
     padding: 0.375rem;
 }
 .Rate__star{
@@ -149,6 +172,21 @@ textarea.custome-input{
           }
     }
 }
+.text-circle {
+    color: $main-color;
+    &::before{
+        content: "\2022";
+        color: $main-color;
+        font-weight: bold;
+        display: inline-block;
+        width: auto;
+        position: relative;
+        top: 10px;
+        height: 0;
+        font-size: 35px;
+        padding-left: 7px;
+    }
+}
 .custome-radio{
     label{
         display: inline-block;
@@ -159,7 +197,7 @@ textarea.custome-input{
 }
 .support-card{
     border: 1px solid $main-color;
-    border-radius: 3px;
+    border-radius: $radius;
 }
 .pop-up{
     position: fixed;
@@ -176,6 +214,11 @@ textarea.custome-input{
         width: 90%;
         background-color: #fff;
         border: 1px solid $main-color;
-        border-radius: 3px;
+        border-radius: $radius;
     }
+}
+.is-invalid select,
+.is-invalid input,
+.is-invalid textarea{
+    border-color: red !important;
 }

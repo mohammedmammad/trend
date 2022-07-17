@@ -19,7 +19,12 @@ import {
   faCirclePlus,
   faHeadset,
 } from "@fortawesome/free-solid-svg-icons";
-import { faCalendar } from "@fortawesome/free-regular-svg-icons";
+import {
+  faCalendar,
+  faCircleCheck,
+  faCircleXmark,
+  faCircleQuestion,
+} from "@fortawesome/free-regular-svg-icons";
 library.add(
   faCalendar,
   faMagnifyingGlass,
@@ -30,7 +35,10 @@ library.add(
   faLink,
   faPaperPlane,
   faCirclePlus,
-  faHeadset
+  faHeadset,
+  faCircleXmark,
+  faCircleQuestion,
+  faCircleCheck
 );
 import { FontAwesomeIcon } from "@fortawesome/vue-fontawesome";
 Vue.component("font-awesome-icon", FontAwesomeIcon);
@@ -40,7 +48,6 @@ import "popper.js";
 import "bootstrap/dist/css/bootstrap.min.css";
 import "./assets/css/style.scss";
 import i18n from "./i18n";
-
 Vue.config.productionTip = false;
 new Vue({
   router,
@@ -48,3 +55,12 @@ new Vue({
   i18n,
   render: (h) => h(App),
 }).$mount("#app");
+router.beforeEach((to, from, next) => {
+  if (!store.getters.loggedIn) {
+    next({
+      path: `/create`,
+    });
+  } else {
+    next();
+  }
+});

@@ -55,37 +55,52 @@
           <div class="row py-2">
             <div class="col-12 mb-2">
               <div class="form-group mb-1">
-                <select class="form-control custome-form-control">
+                <select
+                  class="form-control custome-form-control"
+                  v-model="form.type"
+                >
                   <option value="" select>نوع التنازع</option>
-                  <option>1</option>
-                  <option>2</option>
-                  <option>3</option>
-                  <option>4</option>
-                  <option>5</option>
+                  <option
+                    v-for="typ in forms.types"
+                    :key="typ.id"
+                    :value="typ.id"
+                  >
+                    {{ typ.name }}
+                  </option>
                 </select>
               </div>
             </div>
             <div class="col-4 mb-2">
               <div class="form-group mb-1">
-                <select class="form-control custome-form-control">
+                <select
+                  class="form-control custome-form-control"
+                  v-model="form.number"
+                >
                   <option value="" select>رقم الطلب</option>
-                  <option>1</option>
-                  <option>2</option>
-                  <option>3</option>
-                  <option>4</option>
-                  <option>5</option>
+                  <option
+                    v-for="typ in forms.ads_requests"
+                    :key="typ.id"
+                    :value="typ.id"
+                  >
+                    {{ typ.id }}
+                  </option>
                 </select>
               </div>
             </div>
             <div class="col-8 mb-2">
               <div class="form-group mb-1">
-                <select class="form-control custome-form-control">
+                <select
+                  class="form-control custome-form-control"
+                  v-model="form.name"
+                >
                   <option value="" select>اسم طرف التنازع</option>
-                  <option>1</option>
-                  <option>2</option>
-                  <option>3</option>
-                  <option>4</option>
-                  <option>5</option>
+                  <option
+                    v-for="typ in forms.to_users"
+                    :key="typ.id"
+                    :value="typ.id"
+                  >
+                    {{ typ.username }}
+                  </option>
                 </select>
               </div>
             </div>
@@ -165,14 +180,36 @@
 </template>
 
 <script>
+import mixins from "@/mixins";
 export default {
   name: "Create",
+  mixins: [mixins],
   components: {},
   data() {
-    return {};
+    return {
+      forms: {},
+      form: {
+        type: "",
+        number: "",
+        name: "",
+        descraption: null,
+      },
+    };
   },
   watch: {},
   computed: {},
-  mounted() {},
+  methods: {
+    getRequestes() {
+      this.handleRequest("COMMON", "GET_FORMS").then((res) => {
+        if ((res.status == 200) & (res.data != null)) {
+          console.log(res.data);
+          this.forms = res.data;
+        }
+      });
+    },
+  },
+  mounted() {
+    this.getRequestes();
+  },
 };
 </script>

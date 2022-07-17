@@ -1,60 +1,42 @@
 import Vue from "vue";
 import VueRouter from "vue-router";
 import Home from "../views/Home.vue";
-import i18n from "../i18n";
-
 Vue.use(VueRouter);
-
 const routes = [
   {
     path: "/",
-    redirect: `/${i18n.locale}`,
+    name: "Home",
+    component: Home,
   },
   {
-    path: "/ar",
-    alias: "/en",
-    component: {
-      render(c) {
-        return c("router-view");
-      },
-    },
-    children: [
-      {
-        path: "/",
-        name: "Home",
-        component: Home,
-      },
-      {
-        path: "recieve",
-        name: "Recieve",
-        component: () => import("../views/Recieve.vue"),
-      },
-      {
-        path: "details",
-        name: "Details",
-        component: () => import("../views/Details.vue"),
-      },
-      {
-        path: "recievedetails",
-        name: "Recievedetails",
-        component: () => import("../views/Recievedetails.vue"),
-      },
-      {
-        path: "create",
-        name: "Create",
-        component: () => import("../views/Create.vue"),
-      },
-      {
-        path: "support",
-        name: "Support",
-        component: () => import("../views/Support.vue"),
-      },
-      {
-        path: "history",
-        name: "History",
-        component: () => import("../views/History.vue"),
-      },
-    ],
+    path: "/recieve",
+    name: "Recieve",
+    component: () => import("../views/Recieve.vue"),
+  },
+  {
+    path: "/details",
+    name: "Details",
+    component: () => import("../views/Details.vue"),
+  },
+  {
+    path: "/recievedetails",
+    name: "Recievedetails",
+    component: () => import("../views/Recievedetails.vue"),
+  },
+  {
+    path: "/create",
+    name: "Create",
+    component: () => import("../views/Create.vue"),
+  },
+  {
+    path: "/support",
+    name: "Support",
+    component: () => import("../views/Support.vue"),
+  },
+  {
+    path: "/history",
+    name: "History",
+    component: () => import("../views/History.vue"),
   },
 ];
 
