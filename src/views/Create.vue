@@ -310,9 +310,10 @@ export default {
         }
       }
       formData.append("type_id", this.form.type_id);
-      formData.append("category_id", this.form.category_id);
+      formData.append("ads_request_id", this.form.ads_request_id);
+      formData.append("to_user_id", this.form.to_user_id);
       formData.append("details", this.form.details);
-      formData.append("type", this.form.type);
+      formData.append("recovery", this.form.recovery);
       this.$v.$touch();
       if (this.$v.$invalid) return false;
       this.handleRequest("COMMON", "CREATE", formData).then((res) => {
