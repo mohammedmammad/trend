@@ -37,19 +37,43 @@
           <div class="d-flex flex-wrap py-2 justify-content-between">
             <div>
               <div class="gray-color text-card">مدفوع</div>
-              <div class="mt-2 value-card">1500</div>
+              <div class="mt-2 value-card">
+                {{
+                  release_details.total != null
+                    ? release_details.total
+                    : "-----"
+                }}
+              </div>
             </div>
             <div>
               <div class="gray-color text-card">مستلم/افرج</div>
-              <div class="mt-2 value-card">1500</div>
+              <div class="mt-2 value-card">
+                {{
+                  release_details.released != null
+                    ? release_details.released
+                    : "-----"
+                }}
+              </div>
             </div>
             <div>
               <div class="gray-color text-card">مستلم/تحويل</div>
-              <div class="mt-2 value-card">1500</div>
+              <div class="mt-2 value-card">
+                {{
+                  release_details.transfered != null
+                    ? release_details.transfered
+                    : "-----"
+                }}
+              </div>
             </div>
             <div>
               <div class="gray-color text-card">معلق</div>
-              <div class="mt-2 value-card orange-color">1500</div>
+              <div class="mt-2 value-card orange-color">
+                {{
+                  release_details.remaining != null
+                    ? release_details.remaining
+                    : "-----"
+                }}
+              </div>
             </div>
           </div>
           <div class="row py-2">
@@ -86,6 +110,7 @@
               >
                 <select
                   class="form-control custome-form-control"
+                  @change="getData()"
                   v-model.trim="$v.form.ads_request_id.$model"
                 >
                   <option value="" select>رقم الطلب</option>
@@ -169,7 +194,13 @@
               </div>
               <div>
                 <span class="gray-color text-card pr-0 pl-1">الى</span>
-                <span class="value-card">15000</span>
+                <span class="value-card">
+                  {{
+                    release_details.remaining != null
+                      ? release_details.remaining
+                      : "0000"
+                  }}</span
+                >
               </div>
               <div :class="{ 'is-invalid': $v.form.recovery.$error }">
                 <input
@@ -287,6 +318,12 @@ export default {
     return {
       forms: {},
       url: [],
+      release_details: {
+        released: null,
+        remaining: null,
+        total: null,
+        transfered: null,
+      },
       form: {
         type_id: "",
         ads_request_id: "",
@@ -300,12 +337,18 @@ export default {
   watch: {},
   computed: {},
   methods: {
+    getData() {
+      this.forms.ads_requests.map((req) => {
+        if (req.id == this.form.ads_request_id) {
+          this.release_details = req.release_details;
+        }
+      });
+    },
     create() {
       let formData = new FormData();
       for (var i = 0; i < this.$refs.file.files.length; i++) {
         if (!this.deleteFiles.includes(i)) {
           let file = this.$refs.file.files[i];
-          console.log(file);
           formData.append("attachment-" + i, file);
         }
       }
@@ -344,7 +387,6 @@ export default {
     getRequestes() {
       this.handleRequest("COMMON", "GET_FORMS").then((res) => {
         if ((res.status == 200) & (res.data != null)) {
-          console.log(res.data);
           this.forms = res.data;
         }
       });

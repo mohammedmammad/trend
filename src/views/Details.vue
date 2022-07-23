@@ -66,40 +66,53 @@
           >
             <div class="gray-color">
               <span>رقم الطلب</span>
-              <span class="mr-2">345654</span>
+              <span class="mr-2">{{ details.id }}</span>
             </div>
             <div class="gray-color">
-              <span>12/02/2022</span>
+              <span>{{ details.created_at }}</span>
             </div>
             <div class="gray-btn background-white">
-              <span>قيد المداولة</span>
+              <span>{{ details.status_txt }}</span>
             </div>
           </div>
           <div class="d-flex align-items-center mb-2 px-2">
             <div class="img-user">
-              <img
-                src="https://vid.alarabiya.net/images/2016/05/11/e49eb47a-620e-4537-8d8a-5617fb37edc4/e49eb47a-620e-4537-8d8a-5617fb37edc4_16x9_1200x676.jpg?width=1138"
-                alt="user"
-              />
+              <img :src="details.other_user.image" alt="user" />
             </div>
             <div class="card-data">
-              <div>
-                <span>المعلن :</span>
-                <span class="mr-1">محمد حماد سند حماد</span>
+              <div class="mb-2">
+                <span>اسم المعلن :</span>
+                <span class="mr-1">{{ details.other_user.username }}</span>
               </div>
+              <div class="main-color">
+                <span>نوع التنازع</span>
+                <span class="mr-1">/</span>
+                <span class="mr-1">{{ details.type.name }}</span>
+              </div>
+            </div>
+          </div>
+          <div class="d-flex justify-content-around px-2">
+            <div>
+              <span class="gray-color">قيمة الطلب :</span>
+              <span class="sub-main-color mr-1">{{
+                details.release_details.total
+              }}</span>
+            </div>
+            <div>
+              <span class="gray-color">قيمة طلب الاسترداد :</span>
+              <span class="orange-color mr-1">{{
+                details.release_details.released
+              }}</span>
             </div>
           </div>
           <div class="d-flex justify-content-between background-white mt-2 p-2">
             <div class="orange-color px-2">
-              <span>طلبات الاعلان قيد التنفيذ</span>
+              <span>{{ details.ads_request.status_txt }}</span>
             </div>
-            <router-link
-              :to="`/${$i18n.locale}/details`"
-              class="main-color border-right-action px-2"
-            >
+            <div class="main-color border-right-action px-2">
               <span class="ml-2"><u>تفاصيل طلب الاعلان</u></span>
               <font-awesome-icon icon="fa-solid fa-share-from-square" />
-            </router-link>
+            </div>
           </div>
         </div>
         <div class="details-card active shadow mb-3 rounded">
@@ -113,19 +126,27 @@
             <div class="d-flex flex-wrap p-2 justify-content-between">
               <div>
                 <div class="gray-color text-card">مدفوع</div>
-                <div class="mt-2 value-card">1500</div>
+                <div class="mt-2 value-card">
+                  {{ details.release_details.total }}
+                </div>
               </div>
               <div>
                 <div class="gray-color text-card">مستلم/افرج</div>
-                <div class="mt-2 value-card">1500</div>
+                <div class="mt-2 value-card">
+                  {{ details.release_details.released }}
+                </div>
               </div>
               <div>
                 <div class="gray-color text-card">مستلم/تحويل</div>
-                <div class="mt-2 value-card">1500</div>
+                <div class="mt-2 value-card">
+                  {{ details.release_details.transfered }}
+                </div>
               </div>
               <div>
                 <div class="gray-color text-card">معلق</div>
-                <div class="mt-2 value-card orange-color">1500</div>
+                <div class="mt-2 value-card orange-color">
+                  {{ details.release_details.remaining }}
+                </div>
               </div>
             </div>
             <div class="row p-2">
@@ -135,7 +156,7 @@
                   readonly
                   class="form-control custome-input"
                   placeholder="ادخل عنوان الطلب"
-                  value="تنفيذ الاعلان فى وقت غير متفق عليه"
+                  :value="details.type.name"
                 />
               </div>
               <div class="col-4 mb-2">
@@ -144,7 +165,7 @@
                   readonly
                   class="form-control custome-input"
                   placeholder="ادخل قيمة الطلب"
-                  value="456543"
+                  :value="details.id"
                 />
               </div>
               <div class="col-8 mb-2">
@@ -153,7 +174,7 @@
                   readonly
                   class="form-control custome-input"
                   placeholder="ادخل الاسم "
-                  value="محمد حماد"
+                  :value="details.other_user.username"
                 />
               </div>
               <div class="col-12 mb-2">
@@ -161,10 +182,8 @@
                   class="form-control custome-input"
                   readonly
                   placeholder="ادخل تفاصيل الطلب"
-                >
-                  لقد اتفقت مع المعلن على تنفيذ الاعلان فى وقت محدد  
-                  لقد اتفقت مع المعلن على تنفيذ الاعلان فى وقت محدد 
-                </textarea>
+                  v-model="details.details"
+                ></textarea>
               </div>
               <div class="col-12 my-2 main-color">
                 <h6>أدخل مبلغ طلب الاسترداد</h6>
@@ -185,14 +204,16 @@
                 </div>
                 <div>
                   <span class="gray-color text-card pr-0 pl-1">الى</span>
-                  <span class="value-card">15000</span>
+                  <span class="value-card">{{
+                    details.release_details.remaining
+                  }}</span>
                 </div>
                 <div>
                   <input
                     type="text"
                     class="form-control special-input"
                     placeholder="القيمة"
-                    value="456543"
+                    v-model="recovery"
                   />
                 </div>
               </div>
@@ -200,8 +221,12 @@
                 <h6>لا يمكنك الزيادة مستقبلا على قيمة الطلب</h6>
               </div>
               <div class="col-12 d-flex justify-content-around mt-3">
-                <button type="button" class="main-button">ارسال الطلب</button>
-                <button type="button" class="cancel-button">الغاء</button>
+                <button type="button" class="main-button" @click="resend">
+                  ارسال الطلب
+                </button>
+                <button type="button" class="cancel-button" @click="resetsend">
+                  الغاء
+                </button>
               </div>
             </div>
           </template>
@@ -525,11 +550,16 @@
 </template>
 
 <script>
+import mixins from "@/mixins";
 export default {
-  name: "App",
+  name: "Details",
+  mixins: [mixins],
   components: {},
   data() {
     return {
+      request_id: null,
+      recovery: null,
+      details: {},
       showes: {
         data: false,
         msg: false,
@@ -555,9 +585,47 @@ export default {
         [section]: true,
       };
     },
+    resend() {
+      let formDataResend = new FormData();
+      formDataResend.append("recovery", this.recovery);
+      let formdata = {
+        id: this.request_id,
+        data: formDataResend,
+      };
+      this.handleRequest("COMMON", "RESEND", formdata).then((res) => {
+        if (res.status == 200) {
+          this.$store.dispatch("STORE_SAVE_ERRORS", {
+            styled: "filled",
+            type: "success",
+            title: "عملية ناجحة",
+            message: res.message,
+          });
+          setTimeout(() => {
+            this.$store.dispatch("STORE_SAVE_ERRORS", null);
+          }, 5000);
+        }
+      });
+    },
+    resetsend() {
+      this.recovery = this.details.recovery;
+    },
+    getRequest() {
+      this.handleRequest("COMMON", "REQUEST_DETAILS", this.request_id).then(
+        (res) => {
+          if ((res.status == 200) & (res.data != null)) {
+            console.log(res.data);
+            this.details = res.data.details;
+            this.recovery = this.details.recovery;
+          }
+        }
+      );
+    },
   },
   watch: {},
   computed: {},
-  mounted() {},
+  mounted() {
+    this.request_id = this.$route.params.id;
+    this.getRequest();
+  },
 };
 </script>

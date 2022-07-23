@@ -21,6 +21,8 @@ const ticket = {
               case "GET_RECIEVED_REQUESTES":
               case "GET_FORMS":
               case "CREATE":
+              case "REQUEST_DETAILS":
+              case "RESEND":
                 resolve(res.data);
                 break;
             }

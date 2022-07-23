@@ -13,4 +13,10 @@ export default {
   CREATE(formData) {
     return Api().post("dispute_requests", formData);
   },
+  REQUEST_DETAILS(id) {
+    return Api().get(`dispute_requests/${id}`);
+  },
+  RESEND(formData) {
+    return Api().post(`dispute_requests/${formData.id}/resend`, formData.data);
+  },
 };
