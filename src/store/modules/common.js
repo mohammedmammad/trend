@@ -23,7 +23,19 @@ const ticket = {
               case "CREATE":
               case "REQUEST_DETAILS":
               case "RESEND":
+              case "CREATE_ATTACH":
+              case "GET_MESSAGES":
+              case "ADD_REPLY":
+              case "GET_RATE":
+              case "ADD_RATE":
+              case "FINISH":
+              case "SUPPORT":
+              case "SEND_SUPPORT":
+              case "ACTION_SUPPORT":
                 resolve(res.data);
+                break;
+              case "GET_ATTACHMENTS":
+                resolve(res);
                 break;
             }
             resolve("success");

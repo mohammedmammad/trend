@@ -31,7 +31,7 @@
         <div class="d-flex justify-content-between">
           <a class="nav-link active">طلبات التنازع</a>
           <router-link
-            :to="`/${$i18n.locale}/support`"
+            :to="`/support`"
             class="nav-link nav-link-with-border d-flex align-items-center"
           >
             <font-awesome-icon icon="fa-solid fa-headset" />
@@ -43,10 +43,8 @@
     <div class="custome-nav background-white">
       <div class="container">
         <div class="d-flex justify-content-between">
-          <router-link :to="`/${$i18n.locale}`" class="nav-link">
-            طلبات مقدمة
-          </router-link>
-          <router-link :to="`/${$i18n.locale}/recieve`" class="nav-link active">
+          <router-link :to="`/`" class="nav-link"> طلبات مقدمة </router-link>
+          <router-link :to="`/recieve`" class="nav-link active">
             طلبات مستقبلة
           </router-link>
         </div>
@@ -94,7 +92,7 @@
               <span>طلبات الاعلان قيد التنفيذ</span>
             </div>
             <router-link
-              :to="`/${$i18n.locale}/details`"
+              :to="`/details`"
               class="main-color border-right-action px-2"
             >
               <span class="ml-2"><u>تفاصيل طلب الاعلان</u></span>
@@ -259,7 +257,7 @@
                   <span class="mr-2">أضف رد</span>
                 </button>
                 <router-link
-                  :to="`/${$i18n.locale}/history`"
+                  :to="`/history`"
                   class="cancel-button"
                   tag="button"
                 >

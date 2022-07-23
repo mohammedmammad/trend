@@ -188,7 +188,7 @@
               <span>طلبات الاعلان قيد التنفيذ</span>
             </div>
             <router-link
-              :to="`/${$i18n.locale}/details`"
+              :to="`/details`"
               class="main-color border-right-action px-2"
             >
               <span class="ml-2"><u>تفاصيل طلب الاعلان</u></span>
@@ -251,7 +251,7 @@
               <span>طلبات الاعلان قيد التنفيذ</span>
             </div>
             <router-link
-              :to="`/${$i18n.locale}/details`"
+              :to="`/details`"
               class="main-color border-right-action px-2"
             >
               <span class="ml-2"><u>تفاصيل طلب الاعلان</u></span>
@@ -314,7 +314,7 @@
               <span>طلبات الاعلان قيد التنفيذ</span>
             </div>
             <router-link
-              :to="`/${$i18n.locale}/details`"
+              :to="`/details`"
               class="main-color border-right-action px-2"
             >
               <span class="ml-2"><u>تفاصيل طلب الاعلان</u></span>
@@ -377,7 +377,7 @@
               <span>طلبات الاعلان قيد التنفيذ</span>
             </div>
             <router-link
-              :to="`/${$i18n.locale}/details`"
+              :to="`/details`"
               class="main-color border-right-action px-2"
             >
               <span class="ml-2"><u>تفاصيل طلب الاعلان</u></span>
@@ -440,7 +440,7 @@
               <span>طلبات الاعلان قيد التنفيذ</span>
             </div>
             <router-link
-              :to="`/${$i18n.locale}/details`"
+              :to="`/details`"
               class="main-color border-right-action px-2"
             >
               <span class="ml-2"><u>تفاصيل طلب الاعلان</u></span>
@@ -503,7 +503,7 @@
               <span>طلبات الاعلان قيد التنفيذ</span>
             </div>
             <router-link
-              :to="`/${$i18n.locale}/details`"
+              :to="`/details`"
               class="main-color border-right-action px-2"
             >
               <span class="ml-2"><u>تفاصيل طلب الاعلان</u></span>

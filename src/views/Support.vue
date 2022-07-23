@@ -29,10 +29,10 @@
     <div class="custome-nav background-white">
       <div class="container">
         <div class="d-flex justify-content-between">
-          <a class="nav-link active d-flex align-items-center" href="#">
+          <span class="nav-link active d-flex align-items-center">
             <font-awesome-icon icon="fa-solid fa-headset" />
             <span class="d-block mr-2">طلب دعم</span>
-          </a>
+          </span>
         </div>
       </div>
     </div>
@@ -50,10 +50,10 @@
           >
             <div class="gray-color">
               <span>رقم الطلب</span>
-              <span class="mr-2">345654</span>
+              <span class="mr-2">{{ details.details.id }}</span>
             </div>
             <div class="gray-color">
-              <span>12/02/2022</span>
+              <span>{{ details.details.created_at }}</span>
             </div>
             <div class="gray-btn background-white">
               <span>قيد المداولة</span>
@@ -61,15 +61,14 @@
           </div>
           <div class="d-flex align-items-center mb-2 px-2 pb-2">
             <div class="img-user">
-              <img
-                src="https://vid.alarabiya.net/images/2016/05/11/e49eb47a-620e-4537-8d8a-5617fb37edc4/e49eb47a-620e-4537-8d8a-5617fb37edc4_16x9_1200x676.jpg?width=1138"
-                alt="user"
-              />
+              <img :src="details.details.other_user.image" alt="user" />
             </div>
             <div class="card-data">
               <div>
                 <span>العميل :</span>
-                <span class="mr-1">محمد حماد سند حماد</span>
+                <span class="mr-1">{{
+                  details.details.other_user.username
+                }}</span>
               </div>
             </div>
           </div>
@@ -82,86 +81,113 @@
               </div>
               <div class="new-tab active">سجل العمليات</div>
             </div>
-            <div class="support-card p-2 mt-3">
-              <div
-                class="d-flex justify-content-between align-items-center mb-2"
-              >
-                <div class="d-flex align-items-center">
-                  <div class="img-user">
-                    <img
-                      src="https://vid.alarabiya.net/images/2016/05/11/e49eb47a-620e-4537-8d8a-5617fb37edc4/e49eb47a-620e-4537-8d8a-5617fb37edc4_16x9_1200x676.jpg?width=1138"
-                      alt="user"
-                    />
+            <template v-if="details.history.length > 0">
+              <div v-for="record in details.history" :key="record.id">
+                <template v-if="record.status">
+                  <div class="support-card p-2 mt-3">
+                    <div
+                      class="
+                        d-flex
+                        justify-content-between
+                        align-items-center
+                        mb-2
+                      "
+                    >
+                      <div class="d-flex align-items-center">
+                        <div class="img-user">
+                          <img :src="record.from_user.image" alt="user" />
+                        </div>
+                        <h6 class="mb-0 mr-2 main-color">
+                          {{ record.from_user.username }}
+                        </h6>
+                      </div>
+                      <div>
+                        <small class="gray-color">{{
+                          record.created_at
+                        }}</small>
+                      </div>
+                    </div>
+                    <p class="gray-color px-3 text-14">
+                      {{ record.details }}
+                    </p>
+                    <div class="d-flex justify-content-end">
+                      <span
+                        class="main-button main-button-accept"
+                        v-if="record.status == 1"
+                      >
+                        مقبول
+                      </span>
+                      <span class="main-button main-button-refuse" v-else>
+                        مرفوض
+                      </span>
+                    </div>
                   </div>
-                  <h6 class="mb-0 mr-2 main-color">محمد حماد سند حماد</h6>
-                </div>
-                <div>
-                  <small class="gray-color">اخر تعليق منذ 29 ساعة</small>
-                </div>
-              </div>
-              <p class="gray-color px-3 text-14">
-                هذا النص هو مثال لنص يمكن أن يستبدل في نفس المساحة، لقد تم توليد
-                هذا النص من مولد النص العربى، حيث يمكنك أن تولد مثل هذا
-              </p>
-            </div>
-            <div class="col-12 d-flex justify-content-around my-2">
-              <button type="button" class="main-button main-button-green">
-                قبول
-              </button>
-              <button type="button" class="main-button">رفض</button>
-            </div>
-            <div class="support-card p-2 mt-3">
-              <div
-                class="d-flex justify-content-between align-items-center mb-2"
-              >
-                <div class="d-flex align-items-center">
-                  <div class="img-user">
-                    <img
-                      src="https://vid.alarabiya.net/images/2016/05/11/e49eb47a-620e-4537-8d8a-5617fb37edc4/e49eb47a-620e-4537-8d8a-5617fb37edc4_16x9_1200x676.jpg?width=1138"
-                      alt="user"
-                    />
+                </template>
+                <template v-else>
+                  <div class="with-accept-refuse">
+                    <div class="support-card p-2 mt-3">
+                      <div
+                        class="
+                          d-flex
+                          justify-content-between
+                          align-items-center
+                          mb-2
+                        "
+                      >
+                        <div class="d-flex align-items-center">
+                          <div class="img-user">
+                            <img :src="record.from_user.image" alt="user" />
+                          </div>
+                          <h6 class="mb-0 mr-2 main-color">
+                            {{ record.from_user.username }}
+                          </h6>
+                        </div>
+                        <div>
+                          <small class="gray-color">{{
+                            record.created_at
+                          }}</small>
+                        </div>
+                      </div>
+                      <p class="gray-color px-3 text-14">
+                        {{ record.details }}
+                      </p>
+                    </div>
+                    <div class="col-12 d-flex justify-content-around my-2">
+                      <button
+                        type="button"
+                        class="main-button main-button-green"
+                        @click="action(record.id, true)"
+                      >
+                        قبول
+                      </button>
+                      <button
+                        type="button"
+                        class="main-button"
+                        @click="action(record.id, false)"
+                      >
+                        رفض
+                      </button>
+                    </div>
                   </div>
-                  <h6 class="mb-0 mr-2 main-color">محمد حماد سند حماد</h6>
-                </div>
-                <div>
-                  <small class="gray-color">اخر تعليق منذ 29 ساعة</small>
-                </div>
+                </template>
               </div>
-              <p class="gray-color px-3 text-14">
-                هذا النص هو مثال لنص يمكن أن يستبدل في نفس المساحة، لقد تم توليد
-                هذا النص من مولد النص العربى، حيث يمكنك أن تولد مثل هذا
-              </p>
-              <div class="d-flex justify-content-end">
-                <button type="button" class="main-button main-button-accept">
-                  مقبول
-                </button>
+              <div class="support-card p-2 mt-3" v-if="loading">
+                <div class="loading"></div>
               </div>
-            </div>
-            <div class="support-card p-2 mt-3">
+            </template>
+            <div class="order-card shadow my-3 bg-white rounded w-100" v-else>
               <div
-                class="d-flex justify-content-between align-items-center mb-2"
+                class="
+                  w-100
+                  d-flex
+                  flex-wrap
+                  justify-content-center
+                  align-items-center
+                  p-2
+                  main-color
+                "
               >
-                <div class="d-flex align-items-center">
-                  <div class="img-user">
-                    <img
-                      src="https://vid.alarabiya.net/images/2016/05/11/e49eb47a-620e-4537-8d8a-5617fb37edc4/e49eb47a-620e-4537-8d8a-5617fb37edc4_16x9_1200x676.jpg?width=1138"
-                      alt="user"
-                    />
-                  </div>
-                  <h6 class="mb-0 mr-2 main-color">محمد حماد سند حماد</h6>
-                </div>
-                <div>
-                  <small class="gray-color">اخر تعليق منذ 29 ساعة</small>
-                </div>
-              </div>
-              <p class="gray-color px-3 text-14">
-                هذا النص هو مثال لنص يمكن أن يستبدل في نفس المساحة، لقد تم توليد
-                هذا النص من مولد النص العربى، حيث يمكنك أن تولد مثل هذا
-              </p>
-              <div class="d-flex justify-content-end">
-                <button type="button" class="main-button main-button-refuse">
-                  مرفوض
-                </button>
+                لا توجد سجل عمليات ليتم عرضها
               </div>
             </div>
           </div>
@@ -187,11 +213,12 @@
           <div class="w-100">
             <textarea
               class="form-control custome-input custome-input-bg-white"
+              v-model="form.reason"
               placeholder="يمكنك اضافة تعليق موجه للطرف الاخر"
             ></textarea>
           </div>
           <div class="d-flex justify-content-between my-3">
-            <button class="special-btn special-btn-rad" @click="showpop(false)">
+            <button class="special-btn special-btn-rad" @click="send">
               <font-awesome-icon icon="fa-solid fa-paper-plane" />
               <span class="mr-2">ارسال</span>
             </button>
@@ -204,23 +231,85 @@
 </template>
 
 <script>
+import mixins from "@/mixins";
 export default {
   name: "Support",
+  mixins: [mixins],
   components: {},
   data() {
     return {
+      details: null,
       show: false,
-      myRate: 0,
-      myRate1: 4,
+      loading: false,
+      form: {
+        reason: null,
+      },
     };
   },
+  watch: {},
+  computed: {},
   methods: {
     showpop(status) {
       this.show = status;
     },
+    fethData() {
+      this.handleRequest("COMMON", "SUPPORT", this.request_id).then((res) => {
+        if ((res.status == 200) & (res.data != null)) {
+          this.loading = false;
+          this.details = res.data;
+        }
+      });
+    },
+    send() {
+      let formData = new FormData();
+      formData.append("reason", this.form.reason);
+      let form = {
+        id: this.request_id,
+        data: formData,
+      };
+      this.handleRequest("COMMON", "SEND_SUPPORT", form).then((res) => {
+        if (res.status == 200) {
+          this.loading = true;
+          this.fethData();
+          this.show = false;
+          this.$store.dispatch("STORE_SAVE_ERRORS", {
+            styled: "filled",
+            type: "success",
+            title: "عملية ناجحة",
+            message: res.message,
+          });
+          setTimeout(() => {
+            this.$store.dispatch("STORE_SAVE_ERRORS", null);
+          }, 5000);
+        }
+      });
+    },
+    action(id, status) {
+      let data = {
+        req_id: this.request_id,
+        id: id,
+        accept: status,
+      };
+      this.handleRequest("COMMON", "ACTION_SUPPORT", data).then((res) => {
+        if (res.status == 200) {
+          this.loading = true;
+          this.fethData();
+          this.$store.dispatch("STORE_SAVE_ERRORS", {
+            styled: "filled",
+            type: "success",
+            title: "عملية ناجحة",
+            message: res.message,
+          });
+          setTimeout(() => {
+            this.$store.dispatch("STORE_SAVE_ERRORS", null);
+          }, 5000);
+        }
+      });
+    },
   },
-  watch: {},
-  computed: {},
-  mounted() {},
+  mounted() {
+    this.request_id = this.$route.params.id;
+    this.fethData();
+  },
 };
 </script>

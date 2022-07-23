@@ -318,6 +318,7 @@ export default {
     return {
       forms: {},
       url: [],
+      deleteFiles: [],
       release_details: {
         released: null,
         remaining: null,

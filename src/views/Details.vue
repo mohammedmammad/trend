@@ -31,7 +31,7 @@
         <div class="d-flex justify-content-between">
           <a class="nav-link active">طلبات التنازع</a>
           <router-link
-            :to="`/${$i18n.locale}/support`"
+            :to="`/support/${this.request_id}`"
             class="nav-link nav-link-with-border d-flex align-items-center"
           >
             <font-awesome-icon icon="fa-solid fa-headset" />
@@ -43,10 +43,10 @@
     <div class="custome-nav background-white">
       <div class="container">
         <div class="d-flex justify-content-between">
-          <router-link :to="`/${$i18n.locale}`" class="nav-link active">
+          <router-link :to="`/`" class="nav-link active">
             طلبات مقدمة
           </router-link>
-          <router-link :to="`/${$i18n.locale}/recieve`" class="nav-link">
+          <router-link :to="`/recieve`" class="nav-link">
             طلبات مستقبلة
           </router-link>
         </div>
@@ -247,66 +247,86 @@
               <div
                 class="new-tab"
                 :class="{ active: !attach }"
-                @click="attach = false"
+                @click="showMsgOrAttach('msg')"
               >
                 الرسائل
               </div>
               <div
                 class="new-tab"
                 :class="{ active: attach }"
-                @click="attach = true"
+                @click="showMsgOrAttach('attach')"
               >
                 المرفقات
               </div>
             </div>
             <div v-if="!attach">
-              <div class="d-flex justify-content-between align-items-center">
-                <div class="d-flex align-items-center my-3">
-                  <div class="img-user">
-                    <img
-                      src="https://vid.alarabiya.net/images/2016/05/11/e49eb47a-620e-4537-8d8a-5617fb37edc4/e49eb47a-620e-4537-8d8a-5617fb37edc4_16x9_1200x676.jpg?width=1138"
-                      alt="user"
-                    />
+              <div v-if="replies.length > 0" class="mt-3">
+                <div class="mb-3" v-for="rep in replies" :key="rep.id">
+                  <div
+                    class="d-flex justify-content-between align-items-center"
+                  >
+                    <div class="d-flex align-items-center my-3">
+                      <div class="img-user">
+                        <img :src="rep.from_user.image" alt="user" />
+                      </div>
+                      <h6 class="mb-0 mr-2">{{ rep.from_user.username }}</h6>
+                    </div>
+                    <div>
+                      <small class="gray-color">اخر تعليق منذ 29 ساعة</small>
+                    </div>
                   </div>
-                  <h6 class="mb-0 mr-2">محمد حماد سند حماد</h6>
-                </div>
-                <div>
-                  <small class="gray-color">اخر تعليق منذ 29 ساعة</small>
+                  <p class="main-color px-3 text-14">
+                    {{ rep.details }}
+                  </p>
                 </div>
               </div>
-              <p class="main-color px-3 text-14">
-                هذا النص هو مثال لنص يمكن أن يستبدل في نفس المساحة، لقد تم توليد
-                هذا النص من مولد النص العربى، حيث يمكنك أن تولد مثل هذا
-              </p>
+              <div class="order-card shadow my-3 bg-white rounded w-100" v-else>
+                <div
+                  class="
+                    w-100
+                    d-flex
+                    flex-wrap
+                    justify-content-center
+                    align-items-center
+                    p-2
+                    main-color
+                  "
+                >
+                  لا توجد رسائل لعرضها
+                </div>
+              </div>
               <div class="d-flex justify-content-between">
-                <button class="special-btn">
+                <button class="special-btn" @click="showreplay = true">
                   <font-awesome-icon icon="fa-solid fa-plus" />
                   <span class="mr-2">أضف رد</span>
                 </button>
                 <router-link
-                  :to="`/${$i18n.locale}/history`"
+                  :to="`/history/${this.request_id}`"
                   class="cancel-button"
                   tag="button"
                 >
                   <u>عرض سجل الردود</u>
                 </router-link>
               </div>
-              <div class="w-100 my-2">
-                <textarea
-                  class="form-control custome-input"
-                  placeholder="يمكنك اضافة تعليق موجه للطرف الاخر"
-                  rows="3"
-                ></textarea>
-              </div>
-              <div class="d-flex justify-content-between">
-                <button class="special-btn">
-                  <font-awesome-icon icon="fa-solid fa-paper-plane" />
-                  <span class="mr-2">ارسال</span>
-                </button>
-              </div>
+              <template v-if="showreplay">
+                <div class="w-100 my-2">
+                  <textarea
+                    class="form-control custome-input"
+                    placeholder="يمكنك اضافة تعليق موجه للطرف الاخر"
+                    v-model="messages.reply"
+                    rows="3"
+                  ></textarea>
+                </div>
+                <div class="d-flex justify-content-between">
+                  <button class="special-btn" @click="addReply">
+                    <font-awesome-icon icon="fa-solid fa-paper-plane" />
+                    <span class="mr-2">ارسال</span>
+                  </button>
+                </div>
+              </template>
             </div>
             <div class="row mt-3" v-else>
-              <div class="col-12">
+              <!-- <div class="col-12">
                 <div class="d-flex justify-content-between align-items-center">
                   <div class="d-flex align-items-center my-3">
                     <div class="img-user">
@@ -321,28 +341,108 @@
                     <small class="gray-color">اخر تعليق منذ 29 ساعة</small>
                   </div>
                 </div>
-              </div>
+              </div> -->
+              <template v-if="attachments.length > 0">
+                <div></div>
+              </template>
+              <template v-else>
+                <div class="col-12">
+                  <div class="order-card shadow mb-3 bg-white rounded">
+                    <div
+                      class="
+                        d-flex
+                        flex-wrap
+                        justify-content-center
+                        align-items-center
+                        p-2
+                        main-color
+                      "
+                    >
+                      لا توجد مرفقات لعرضها
+                    </div>
+                  </div>
+                </div>
+              </template>
               <div class="col-9 mb-2">
                 <input
+                  readonly
                   type="text"
                   class="form-control custome-input"
                   placeholder="اضافة اسم/وصف/رابط ... المرافق"
                 />
               </div>
               <div class="col-3 mb-2">
-                <div
-                  class="
-                    form-control
-                    custome-input
-                    d-flex
-                    justify-content-around
-                    align-items-center
-                    px-1
-                  "
-                >
-                  <font-awesome-icon icon="fa-solid fa-link" />
-                  <font-awesome-icon icon="fa-solid fa-circle-plus" />
+                <label for="attachment" class="d-block">
+                  <div
+                    class="
+                      form-control
+                      custome-input
+                      d-flex
+                      justify-content-around
+                      align-items-center
+                      px-1
+                    "
+                  >
+                    <font-awesome-icon icon="fa-solid fa-link" />
+                    <font-awesome-icon icon="fa-solid fa-circle-plus" />
+                  </div>
+                </label>
+                <input
+                  @change="uploadFile($event)"
+                  multiple
+                  ref="file"
+                  type="file"
+                  id="attachment"
+                  name="attachment"
+                  class="d-none"
+                />
+              </div>
+              <div class="col-12" v-if="url.length > 0">
+                <div class="row" v-for="(file, index) in url" :key="file.index">
+                  <div class="col-9 mb-2">
+                    <input
+                      readonly
+                      type="text"
+                      class="form-control custome-input custome-input-bg-white"
+                      placeholder="أدخل اسم/وصف/رابط ... المرافق"
+                      :value="file.name"
+                    />
+                  </div>
+                  <div class="col-3 mb-2">
+                    <div class="content-upload-image">
+                      <span
+                        class="cancel-upload"
+                        @click="deleteFile(index, file.index)"
+                      >
+                        <svg
+                          xmlns="http://www.w3.org/2000/svg"
+                          width="20"
+                          height="20"
+                          viewBox="0 0 24 24"
+                          fill="none"
+                          stroke="red"
+                          stroke-width="2"
+                          stroke-linecap="round"
+                          stroke-linejoin="round"
+                          class="feather feather-x-circle"
+                        >
+                          <circle cx="12" cy="12" r="10" />
+                          <line x1="15" y1="9" x2="9" y2="15" />
+                          <line x1="9" y1="9" x2="15" y2="15" />
+                        </svg>
+                      </span>
+                      <img :src="file.url" />
+                    </div>
+                  </div>
                 </div>
+              </div>
+              <div
+                class="col-12 d-flex justify-content-center my-3"
+                v-if="url.length > 0"
+              >
+                <button type="button" class="main-button" @click="createAttach">
+                  اضافة مرفق
+                </button>
               </div>
             </div>
           </div>
@@ -363,7 +463,7 @@
               <li class="d-flex justify-content-between align-items-center">
                 <div class="text d-flex align-items-center">تقييمك للمعلن</div>
                 <div class="w-50">
-                  <rate :length="5" v-model="myRate" rtl="true" />
+                  <rate :length="5" v-model="rate.rate" rtl="true" />
                 </div>
               </li>
               <li class="d-flex justify-content-between align-items-center">
@@ -373,7 +473,7 @@
                 <div class="w-50">
                   <rate
                     :length="5"
-                    v-model="myRate1"
+                    v-model="rateStatus.your_rate"
                     :readonly="true"
                     rtl="true"
                   />
@@ -390,8 +490,8 @@
                       type="radio"
                       name="gridRadios"
                       id="gridRadios1"
-                      value="option1"
-                      checked
+                      value="1"
+                      v-model="rate.advise"
                     />
                     <label class="form-check-label" for="gridRadios1">
                       نعم انصح الاخرين
@@ -403,7 +503,8 @@
                       type="radio"
                       name="gridRadios"
                       id="gridRadios2"
-                      value="option2"
+                      value="0"
+                      v-model="rate.advise"
                     />
                     <label class="form-check-label" for="gridRadios2">
                       لا انصح احد
@@ -417,6 +518,8 @@
                     class="form-check-input"
                     type="checkbox"
                     id="gridCheck1"
+                    value="1"
+                    v-model="rate.editable"
                   />
                   <label class="form-check-label" for="gridCheck1">
                     <u>تمكين المعلن من تغيير تقيمه لك</u>
@@ -433,10 +536,11 @@
               <textarea
                 class="form-control custome-input custome-input-bg-white"
                 placeholder="يمكنك اضافة تعليق موجه للطرف الاخر"
+                v-model="rate.comment"
               ></textarea>
             </div>
             <div class="d-flex justify-content-between my-3">
-              <button class="special-btn">
+              <button class="special-btn" @click="addRate()">
                 <font-awesome-icon icon="fa-solid fa-paper-plane" />
                 <span class="mr-2">ارسال</span>
               </button>
@@ -557,6 +661,8 @@ export default {
   components: {},
   data() {
     return {
+      url: [],
+      deleteFiles: [],
       request_id: null,
       recovery: null,
       details: {},
@@ -570,6 +676,22 @@ export default {
       myRate1: 4,
       check: false,
       attach: false,
+      attachments: [],
+      replies: [],
+      messages: {
+        reply: null,
+      },
+      showreplay: false,
+      rateStatus: {
+        your_rate: 0,
+        can_rate: false,
+      },
+      rate: {
+        comment: null,
+        rate: null,
+        advise: 1,
+        editable: 0,
+      },
     };
   },
   methods: {
@@ -584,6 +706,88 @@ export default {
         ...initActives,
         [section]: true,
       };
+      if (section == "msg") {
+        if (this.attach) {
+          this.showMsgOrAttach("attach");
+        } else {
+          this.showMsgOrAttach("msg");
+        }
+      } else if (section == "rate") {
+        this.getRate();
+      } else if (section == "cancel") {
+        this.finishRequest();
+      }
+    },
+    finishRequest() {
+      this.handleRequest("COMMON", "FINISH", this.request_id).then((res) => {
+        if (res.status == 200) {
+          console.log(res.data);
+        }
+      });
+    },
+    getRate() {
+      this.handleRequest("COMMON", "GET_RATE", this.request_id).then((res) => {
+        if (res.status == 200) {
+          this.rateStatus = res.data;
+        }
+      });
+    },
+    addRate() {
+      if (this.rateStatus.can_rate) {
+        let formData = new FormData();
+        formData.append("comment", this.rate.comment);
+        formData.append("rate", this.rate.rate);
+        formData.append("advise", this.rate.advise);
+        formData.append("editable", this.rate.editable);
+        let form = {
+          id: this.request_id,
+          data: formData,
+        };
+        this.handleRequest("COMMON", "ADD_RATE", form).then((res) => {
+          if (res.status == 200) {
+            this.$store.dispatch("STORE_SAVE_ERRORS", {
+              styled: "filled",
+              type: "success",
+              title: "عملية ناجحة",
+              message: res.message,
+            });
+            setTimeout(() => {
+              this.$store.dispatch("STORE_SAVE_ERRORS", null);
+            }, 5000);
+          }
+        });
+      } else {
+        this.$store.dispatch("STORE_SAVE_ERRORS", {
+          styled: "filled",
+          type: "success",
+          title: "حدث خطأ",
+          message: "أنت لا يمكنك اضافة تقييم",
+        });
+        setTimeout(() => {
+          this.$store.dispatch("STORE_SAVE_ERRORS", null);
+        }, 5000);
+      }
+    },
+    showMsgOrAttach(section) {
+      if (section == "msg") {
+        this.attach = false;
+        this.handleRequest("COMMON", "GET_MESSAGES", this.request_id).then(
+          (res) => {
+            if (res.status == 200) {
+              this.replies = res.data;
+            }
+          }
+        );
+      } else {
+        this.attach = true;
+        this.handleRequest("COMMON", "GET_ATTACHMENTS", this.request_id).then(
+          (res) => {
+            if (res.status == 200) {
+              this.attachments = res.data;
+            }
+          }
+        );
+      }
     },
     resend() {
       let formDataResend = new FormData();
@@ -619,6 +823,68 @@ export default {
           }
         }
       );
+    },
+    uploadFile(e) {
+      for (let i = 0; i < e.target.files.length; i++) {
+        let doc = e.target.files[i];
+        let obj = {
+          index: i,
+          url: URL.createObjectURL(doc),
+          name: e.target.files[i].name,
+        };
+        this.url.push(obj);
+      }
+    },
+    deleteFile(index, fileIndex) {
+      this.deleteFiles.push(fileIndex);
+      this.url.splice(index, 1);
+    },
+    createAttach() {
+      let formData = new FormData();
+      for (var i = 0; i < this.$refs.file.files.length; i++) {
+        if (!this.deleteFiles.includes(i)) {
+          let file = this.$refs.file.files[i];
+          formData.append("attachment-" + i, file);
+        }
+      }
+      let form = {
+        id: this.request_id,
+        data: formData,
+      };
+      this.handleRequest("COMMON", "CREATE_ATTACH", form).then((res) => {
+        if (res.status == 200) {
+          this.$store.dispatch("STORE_SAVE_ERRORS", {
+            styled: "filled",
+            type: "success",
+            title: "عملية ناجحة",
+            message: res.message,
+          });
+          setTimeout(() => {
+            this.$store.dispatch("STORE_SAVE_ERRORS", null);
+          }, 5000);
+        }
+      });
+    },
+    addReply() {
+      let formData = new FormData();
+      formData.append("reply", this.messages.reply);
+      let form = {
+        id: this.request_id,
+        data: formData,
+      };
+      this.handleRequest("COMMON", "ADD_REPLY", form).then((res) => {
+        if (res.status == 200) {
+          this.$store.dispatch("STORE_SAVE_ERRORS", {
+            styled: "filled",
+            type: "success",
+            title: "عملية ناجحة",
+            message: res.message,
+          });
+          setTimeout(() => {
+            this.$store.dispatch("STORE_SAVE_ERRORS", null);
+          }, 5000);
+        }
+      });
     },
   },
   watch: {},

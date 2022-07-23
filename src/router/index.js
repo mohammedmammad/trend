@@ -29,12 +29,12 @@ const routes = [
     component: () => import("../views/Create.vue"),
   },
   {
-    path: "/support",
+    path: "/support/:id",
     name: "Support",
     component: () => import("../views/Support.vue"),
   },
   {
-    path: "/history",
+    path: "/history/:id",
     name: "History",
     component: () => import("../views/History.vue"),
   },

@@ -38,7 +38,7 @@
         <div class="d-flex justify-content-between">
           <a class="nav-link active">طلبات التنازع</a>
           <router-link
-            :to="`/${$i18n.locale}/support`"
+            :to="`/support/${this.request_id}`"
             class="nav-link nav-link-with-border d-flex align-items-center"
           >
             <font-awesome-icon icon="fa-solid fa-headset" />
@@ -61,132 +61,105 @@
           >
             <div class="gray-color">
               <span>رقم الطلب</span>
-              <span class="mr-2">345654</span>
+              <span class="mr-2">{{ details.id }}</span>
             </div>
             <div class="gray-color">
-              <span>12/02/2022</span>
+              <span>{{ details.created_at }}</span>
             </div>
             <div class="gray-btn background-white">
-              <span>قيد المداولة</span>
+              <span>{{ details.status_txt }}</span>
             </div>
           </div>
           <div class="d-flex align-items-center mb-2 px-2">
             <div class="img-user">
-              <img
-                src="https://vid.alarabiya.net/images/2016/05/11/e49eb47a-620e-4537-8d8a-5617fb37edc4/e49eb47a-620e-4537-8d8a-5617fb37edc4_16x9_1200x676.jpg?width=1138"
-                alt="user"
-              />
+              <img :src="details.other_user.image" alt="user" />
             </div>
             <div class="card-data">
-              <div>
-                <span>العميل :</span>
-                <span class="mr-1">محمد حماد سند حماد</span>
+              <div class="mb-2">
+                <span>اسم المعلن :</span>
+                <span class="mr-1">{{ details.other_user.username }}</span>
               </div>
+              <div class="main-color">
+                <span>نوع التنازع</span>
+                <span class="mr-1">/</span>
+                <span class="mr-1">{{ details.type.name }}</span>
+              </div>
+            </div>
+          </div>
+          <div class="d-flex justify-content-around px-2">
+            <div>
+              <span class="gray-color">قيمة الطلب :</span>
+              <span class="sub-main-color mr-1">{{
+                details.release_details.total
+              }}</span>
+            </div>
+            <div>
+              <span class="gray-color">قيمة طلب الاسترداد :</span>
+              <span class="orange-color mr-1">{{
+                details.release_details.released
+              }}</span>
             </div>
           </div>
           <div class="d-flex justify-content-between background-white mt-2 p-2">
             <div class="orange-color px-2">
-              <span>طلبات الاعلان قيد التنفيذ</span>
+              <span>{{ details.ads_request.status_txt }}</span>
             </div>
-            <router-link
-              :to="`/${$i18n.locale}/details`"
-              class="main-color border-right-action px-2"
-            >
+            <div class="main-color border-right-action px-2">
               <span class="ml-2"><u>تفاصيل طلب الاعلان</u></span>
               <font-awesome-icon icon="fa-solid fa-share-from-square" />
-            </router-link>
+            </div>
           </div>
         </div>
         <div class="history">
           <div class="gray-btn background-white"><u>سجل الردود</u></div>
-          <div class="details-card border-bottom">
+          <div class="details-card" v-if="loading">
             <div class="msg-attachment p-2">
-              <div class="d-flex justify-content-between align-items-center">
-                <div class="d-flex align-items-center my-3">
-                  <div class="img-user">
-                    <img
-                      src="https://vid.alarabiya.net/images/2016/05/11/e49eb47a-620e-4537-8d8a-5617fb37edc4/e49eb47a-620e-4537-8d8a-5617fb37edc4_16x9_1200x676.jpg?width=1138"
-                      alt="user"
-                    />
-                  </div>
-                  <h6 class="mb-0 mr-2">محمد حماد سند حماد</h6>
-                </div>
-                <div>
-                  <small class="gray-color">اخر تعليق منذ 29 ساعة</small>
-                </div>
-              </div>
-              <p class="main-color px-3 text-14">
-                هذا النص هو مثال لنص يمكن أن يستبدل في نفس المساحة، لقد تم توليد
-                هذا النص من مولد النص العربى، حيث يمكنك أن تولد مثل هذا
-              </p>
+              <div class="loading"></div>
             </div>
           </div>
-          <div class="details-card border-bottom">
-            <div class="msg-attachment p-2">
-              <div class="d-flex justify-content-between align-items-center">
-                <div class="d-flex align-items-center my-3">
-                  <div class="img-user">
-                    <img
-                      src="https://vid.alarabiya.net/images/2016/05/11/e49eb47a-620e-4537-8d8a-5617fb37edc4/e49eb47a-620e-4537-8d8a-5617fb37edc4_16x9_1200x676.jpg?width=1138"
-                      alt="user"
-                    />
+          <template v-else>
+            <div v-if="replies.length > 0">
+              <div
+                class="details-card border-bottom"
+                v-for="rep in replies"
+                :key="rep.id"
+              >
+                <div class="msg-attachment p-2">
+                  <div
+                    class="d-flex justify-content-between align-items-center"
+                  >
+                    <div class="d-flex align-items-center my-3">
+                      <div class="img-user">
+                        <img :src="rep.from_user.image" alt="user" />
+                      </div>
+                      <h6 class="mb-0 mr-2">{{ rep.from_user.username }}</h6>
+                    </div>
+                    <div>
+                      <small class="gray-color">اخر تعليق منذ 29 ساعة</small>
+                    </div>
                   </div>
-                  <h6 class="mb-0 mr-2 gray-color">محمد حماد سند حماد</h6>
-                </div>
-                <div>
-                  <small class="gray-color">اخر تعليق منذ 29 ساعة</small>
+                  <p class="main-color px-3 text-14">
+                    {{ rep.details }}
+                  </p>
                 </div>
               </div>
-              <p class="gray-color px-3 text-14">
-                هذا النص هو مثال لنص يمكن أن يستبدل في نفس المساحة، لقد تم توليد
-                هذا النص من مولد النص العربى، حيث يمكنك أن تولد مثل هذا
-              </p>
             </div>
-          </div>
-          <div class="details-card border-bottom">
-            <div class="msg-attachment p-2">
-              <div class="d-flex justify-content-between align-items-center">
-                <div class="d-flex align-items-center my-3">
-                  <div class="img-user">
-                    <img
-                      src="https://vid.alarabiya.net/images/2016/05/11/e49eb47a-620e-4537-8d8a-5617fb37edc4/e49eb47a-620e-4537-8d8a-5617fb37edc4_16x9_1200x676.jpg?width=1138"
-                      alt="user"
-                    />
-                  </div>
-                  <h6 class="mb-0 mr-2 gray-color">محمد حماد سند حماد</h6>
-                </div>
-                <div>
-                  <small class="gray-color">اخر تعليق منذ 29 ساعة</small>
-                </div>
+            <div class="order-card shadow my-3 bg-white rounded w-100" v-else>
+              <div
+                class="
+                  w-100
+                  d-flex
+                  flex-wrap
+                  justify-content-center
+                  align-items-center
+                  p-2
+                  main-color
+                "
+              >
+                لا توجد ردود لعرضها
               </div>
-              <p class="gray-color px-3 text-14">
-                هذا النص هو مثال لنص يمكن أن يستبدل في نفس المساحة، لقد تم توليد
-                هذا النص من مولد النص العربى، حيث يمكنك أن تولد مثل هذا
-              </p>
             </div>
-          </div>
-          <div class="details-card border-bottom">
-            <div class="msg-attachment p-2">
-              <div class="d-flex justify-content-between align-items-center">
-                <div class="d-flex align-items-center my-3">
-                  <div class="img-user">
-                    <img
-                      src="https://vid.alarabiya.net/images/2016/05/11/e49eb47a-620e-4537-8d8a-5617fb37edc4/e49eb47a-620e-4537-8d8a-5617fb37edc4_16x9_1200x676.jpg?width=1138"
-                      alt="user"
-                    />
-                  </div>
-                  <h6 class="mb-0 mr-2 gray-color">محمد حماد سند حماد</h6>
-                </div>
-                <div>
-                  <small class="gray-color">اخر تعليق منذ 29 ساعة</small>
-                </div>
-              </div>
-              <p class="gray-color px-3 text-14">
-                هذا النص هو مثال لنص يمكن أن يستبدل في نفس المساحة، لقد تم توليد
-                هذا النص من مولد النص العربى، حيث يمكنك أن تولد مثل هذا
-              </p>
-            </div>
-          </div>
+          </template>
         </div>
       </div>
     </div>
@@ -194,14 +167,44 @@
 </template>
 
 <script>
+import mixins from "@/mixins";
 export default {
   name: "history",
+  mixins: [mixins],
   components: {},
   data() {
-    return {};
+    return {
+      loading: false,
+      details: null,
+      replies: null,
+      request_id: null,
+    };
   },
   watch: {},
   computed: {},
-  mounted() {},
+  methods: {
+    fethData() {
+      this.handleRequest("COMMON", "REQUEST_DETAILS", this.request_id).then(
+        (res) => {
+          if ((res.status == 200) & (res.data != null)) {
+            this.details = res.data.details;
+            this.loading = true;
+            this.handleRequest("COMMON", "GET_MESSAGES", this.request_id).then(
+              (res) => {
+                if (res.status == 200) {
+                  this.loading = false;
+                  this.replies = res.data;
+                }
+              }
+            );
+          }
+        }
+      );
+    },
+  },
+  mounted() {
+    this.request_id = this.$route.params.id;
+    this.fethData();
+  },
 };
 </script>
