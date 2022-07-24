@@ -117,7 +117,7 @@
         </div>
         <div class="details-card active shadow mb-3 rounded">
           <h6
-            class="title text-center main-color m-0 py-2"
+            class="title text-center text-20 main-color m-0 py-2"
             @click="show('data')"
           >
             البيانات
@@ -237,7 +237,7 @@
         </div>
         <div class="details-card active shadow mb-3 rounded">
           <h6
-            class="title text-center main-color m-0 py-2"
+            class="title text-center text-20 main-color m-0 py-2"
             @click="show('msg')"
           >
             الرسائل والمرفقات
@@ -453,7 +453,7 @@
         </div>
         <div class="details-card shadow mb-3 rounded active">
           <h6
-            class="title text-center main-color m-0 py-2"
+            class="title text-center text-20 main-color m-0 py-2"
             @click="show('rate')"
           >
             التقييم
@@ -553,7 +553,7 @@
         </div>
         <div class="shadow mb-3 rounded active">
           <h6
-            class="title text-center text-white m-0 py-2 bg-warning"
+            class="title text-center text-20 text-white m-0 py-2 bg-warning"
             @click="show('cancel')"
           >
             الغاء الطلب
