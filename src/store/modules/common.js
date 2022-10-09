@@ -20,6 +20,8 @@ const ticket = {
               case "GET_REQUESTES":
               case "GET_RECIEVED_REQUESTES":
               case "GET_FORMS":
+              case "GET_USERS":
+              case "GET_ORDERS":
               case "CREATE":
               case "REQUEST_DETAILS":
               case "RESEND":

@@ -1,31 +1,6 @@
 <template>
   <div id="create">
-    <header>
-      <div class="container">
-        <div class="w-100 d-flex justify-content-between">
-          <div class="input-group filter-box">
-            <div class="input-group-prepend">
-              <span class="input-group-text custome-action-right">
-                <font-awesome-icon icon="fa-solid fa-magnifying-glass" />
-              </span>
-            </div>
-            <input
-              type="text"
-              class="form-control"
-              aria-label="Amount (to the nearest dollar)"
-            />
-            <div class="input-group-append">
-              <span class="input-group-text custome-action-left">
-                <font-awesome-icon icon="fa-solid fa-filter" />
-              </span>
-            </div>
-          </div>
-          <button class="back-btn" @click="$router.go(-1)">
-            <font-awesome-icon icon="fa-solid fa-angle-left" />
-          </button>
-        </div>
-      </div>
-    </header>
+    <Header :searchable="true"></Header>
     <div class="orders p-0">
       <div
         class="details-card active shadow mb-3 rounded h-100"
@@ -82,19 +57,24 @@
                 class="form-group mb-1"
                 :class="{ 'is-invalid': $v.form.type_id.$error }"
               >
-                <select
-                  class="form-control custome-form-control"
-                  v-model.trim="$v.form.type_id.$model"
-                >
-                  <option value="" select>نوع التنازع</option>
-                  <option
-                    v-for="typ in forms.types"
-                    :key="typ.id"
-                    :value="typ.id"
+                <div class="content-input">
+                  <span class="label-require dropdown">
+                    <img src="../assets/icons/star.svg" alt="*" />
+                  </span>
+                  <select
+                    class="form-control custome-form-control gray-border"
+                    v-model.trim="$v.form.type_id.$model"
                   >
-                    {{ typ.name }}
-                  </option>
-                </select>
+                    <option value="" select>نوع التنازع</option>
+                    <option
+                      v-for="typ in forms.types"
+                      :key="typ.id"
+                      :value="typ.id"
+                    >
+                      {{ typ.name }}
+                    </option>
+                  </select>
+                </div>
               </div>
               <div
                 class="invalid-feedback"
@@ -108,20 +88,25 @@
                 class="form-group mb-1"
                 :class="{ 'is-invalid': $v.form.ads_request_id.$error }"
               >
-                <select
-                  class="form-control custome-form-control"
-                  @change="getData()"
-                  v-model.trim="$v.form.ads_request_id.$model"
-                >
-                  <option value="" select>رقم الطلب</option>
-                  <option
-                    v-for="typ in forms.ads_requests"
-                    :key="typ.id"
-                    :value="typ.id"
+                <div class="content-input">
+                  <span class="label-require dropdown">
+                    <img src="../assets/icons/star.svg" alt="*" />
+                  </span>
+                  <select
+                    class="form-control custome-form-control gray-border"
+                    @change="getData(form.ads_request_id)"
+                    v-model.trim="$v.form.ads_request_id.$model"
                   >
-                    {{ typ.id }}
-                  </option>
-                </select>
+                    <option value="" select>رقم الطلب</option>
+                    <option
+                      v-for="typ in forms.ads_requests"
+                      :key="typ.id"
+                      :value="typ.id"
+                    >
+                      {{ typ.id }}
+                    </option>
+                  </select>
+                </div>
               </div>
               <div
                 class="invalid-feedback"
@@ -138,19 +123,26 @@
                 class="form-group mb-1"
                 :class="{ 'is-invalid': $v.form.to_user_id.$error }"
               >
-                <select
-                  class="form-control custome-form-control"
-                  v-model.trim="$v.form.to_user_id.$model"
-                >
-                  <option value="" select>اسم طرف التنازع</option>
-                  <option
-                    v-for="typ in forms.to_users"
-                    :key="typ.id"
-                    :value="typ.id"
+                <div class="content-input">
+                  <span class="label-require dropdown">
+                    <img src="../assets/icons/star.svg" alt="*" />
+                  </span>
+                  <select
+                    class="form-control custome-form-control gray-border"
+                    v-model.trim="$v.form.to_user_id.$model"
+                    :disabled="disableName"
+                    @change="getOrders(form.to_user_id)"
                   >
-                    {{ typ.username }}
-                  </option>
-                </select>
+                    <option value="" select>اسم طرف التنازع</option>
+                    <option
+                      v-for="typ in forms.to_users"
+                      :key="typ.id"
+                      :value="typ.id"
+                    >
+                      {{ typ.username }}
+                    </option>
+                  </select>
+                </div>
               </div>
               <div
                 class="invalid-feedback"
@@ -161,12 +153,21 @@
             </div>
             <div class="col-12 mb-2">
               <div :class="{ 'is-invalid': $v.form.details.$error }">
-                <textarea
-                  class="form-control custome-input custome-input-bg-white mb-2"
-                  placeholder="وصف سبب التنازع"
-                  rows="4"
-                  v-model.trim="$v.form.details.$model"
-                ></textarea>
+                <div class="content-input">
+                  <span class="label-require dropdown">
+                    <img src="../assets/icons/star.svg" alt="*" />
+                  </span>
+                  <textarea
+                    class="
+                      form-control
+                      custome-input custome-input-bg-white
+                      mb-2
+                    "
+                    placeholder="وصف سبب التنازع"
+                    rows="4"
+                    v-model.trim="$v.form.details.$model"
+                  ></textarea>
+                </div>
               </div>
               <div
                 class="invalid-feedback"
@@ -309,11 +310,12 @@
 import mixins from "@/mixins";
 import { createValidation } from "@/constants/validation.js";
 import { validationMixin } from "vuelidate";
+import Header from "@/layout/Header";
 export default {
   name: "Create",
   mixins: [validationMixin, mixins],
   validations: createValidation,
-  components: {},
+  components: { Header },
   data() {
     return {
       forms: {},
@@ -333,15 +335,35 @@ export default {
         details: null,
         attachments: [],
       },
+      disableName: false,
     };
   },
   watch: {},
   computed: {},
   methods: {
-    getData() {
+    getData(id) {
       this.forms.ads_requests.map((req) => {
         if (req.id == this.form.ads_request_id) {
           this.release_details = req.release_details;
+        }
+      });
+      this.handleRequest("COMMON", "GET_USERS", id).then((res) => {
+        if (res.status == 200) {
+          this.forms.to_users = res.data.to_users;
+          if (res.data.to_users.length == 1) {
+            this.form.to_user_id = res.data.to_users[0].id;
+            this.disableName = true;
+          } else {
+            this.form.to_user_id = "";
+            this.disableName = false;
+          }
+        }
+      });
+    },
+    getOrders(id) {
+      this.handleRequest("COMMON", "GET_ORDERS", id).then((res) => {
+        if (res.status == 200) {
+          this.forms = res.data;
         }
       });
     },

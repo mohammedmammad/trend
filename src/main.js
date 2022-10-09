@@ -3,6 +3,8 @@ import App from "./App.vue";
 import router from "./router";
 import store from "./store";
 import Vuelidate from "vuelidate";
+import ScrollFixedHeader from "vuejs-scroll-fixed-header";
+Vue.use(ScrollFixedHeader);
 import rate from "vue-rate";
 import "vue-rate/dist/vue-rate.css";
 Vue.use(rate);

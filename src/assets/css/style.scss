@@ -2,13 +2,14 @@ $main-color:#4184CE;
 $sub-main-color:#47CCDE;
 $gray-color: #707070 ;
 $orange-color: #D37A47;
+$blue-color: rgba(4, 29, 103, .55);
 $background-white: #F5F5F5 ;
 $radius: 4px;
 @import "./general.scss";
 body {
     font-family: 'Vazirmatn', sans-serif;
     padding: 0 ;
-    margin: 0 ;
+    margin: 0 ;       
     font-style: normal;
     font-weight: 300;
     font-size: 14px;
@@ -30,13 +31,30 @@ header{
         width: calc(100% - 80px);
         .form-control{
             border: 0 !important;
+            outline: none;
+            box-shadow: none;
+            &::placeholder {
+                color: #888888;
+                opacity: 1; /* Firefox */
+            }
+              
+            &:-ms-input-placeholder { /* Internet Explorer 10-11 */
+               color: #888888;
+            }
+              
+            &::-ms-input-placeholder { /* Microsoft Edge */
+               color: #888888;
+            }
             // height: calc(1.5em + 0.5rem);
         }
         .custome-action-right,
         .custome-action-left{
             color: $sub-main-color !important;  
             background: #fff;
-            border:0px !important; 
+            border:0px !important;
+            img{
+                width: 20px;
+            } 
         }
         .custome-action-right{
             border-top-right-radius: 50px !important;
@@ -282,5 +300,5 @@ header{
     font-size: 19px !important;
 }
 .text-20{
-    font-size: 19px !important;
+    font-size: 20px !important;
 }

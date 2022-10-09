@@ -1,31 +1,6 @@
 <template>
   <div id="support">
-    <header>
-      <div class="container">
-        <div class="w-100 d-flex justify-content-between">
-          <div class="input-group filter-box">
-            <div class="input-group-prepend">
-              <span class="input-group-text custome-action-right">
-                <font-awesome-icon icon="fa-solid fa-magnifying-glass" />
-              </span>
-            </div>
-            <input
-              type="text"
-              class="form-control"
-              aria-label="Amount (to the nearest dollar)"
-            />
-            <div class="input-group-append">
-              <span class="input-group-text custome-action-left">
-                <font-awesome-icon icon="fa-solid fa-filter" />
-              </span>
-            </div>
-          </div>
-          <button class="back-btn" @click="$router.go(-1)">
-            <font-awesome-icon icon="fa-solid fa-angle-left" />
-          </button>
-        </div>
-      </div>
-    </header>
+    <Header></Header>
     <div class="custome-nav background-white">
       <div class="container">
         <div class="d-flex justify-content-between">
@@ -219,7 +194,7 @@
           </div>
           <div class="d-flex justify-content-between my-3">
             <button class="special-btn special-btn-rad" @click="send">
-              <font-awesome-icon icon="fa-solid fa-paper-plane" />
+              <img src="../assets/icons/send.svg" alt="Send" />
               <span class="mr-2">ارسال</span>
             </button>
             <button class="main-button" @click="showpop(false)">رجوع</button>
@@ -232,10 +207,11 @@
 
 <script>
 import mixins from "@/mixins";
+import Header from "@/layout/Header";
 export default {
   name: "Support",
   mixins: [mixins],
-  components: {},
+  components: { Header },
   data() {
     return {
       details: null,

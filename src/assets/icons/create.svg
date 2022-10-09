@@ -1,0 +1,39 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="77" height="77" viewBox="0 0 77 77">
+  <defs>
+    <filter id="Ellipse_1057" x="0" y="0" width="77" height="77" filterUnits="userSpaceOnUse">
+      <feOffset dy="3" input="SourceAlpha"/>
+      <feGaussianBlur stdDeviation="5" result="blur"/>
+      <feFlood flood-opacity="0.09"/>
+      <feComposite operator="in" in2="blur"/>
+      <feComposite in="SourceGraphic"/>
+    </filter>
+    <linearGradient id="linear-gradient" x1="0.5" x2="0.5" y2="1" gradientUnits="objectBoundingBox">
+      <stop offset="0" stop-color="#48dbe1"/>
+      <stop offset="1" stop-color="#4166cd"/>
+      <stop offset="1" stop-color="#236b73"/>
+    </linearGradient>
+    <filter id="add-filled" x="8.341" y="8.342" width="60.318" height="60.318" filterUnits="userSpaceOnUse">
+      <feOffset dy="3" input="SourceAlpha"/>
+      <feGaussianBlur stdDeviation="5" result="blur-2"/>
+      <feFlood flood-opacity="0.09"/>
+      <feComposite operator="in" in2="blur-2"/>
+      <feComposite in="SourceGraphic"/>
+    </filter>
+  </defs>
+  <g id="Group_18501" data-name="Group 18501" transform="translate(-2 -360)">
+    <g id="Group_17015" data-name="Group 17015" transform="translate(17 371.971)">
+      <g transform="matrix(1, 0, 0, 1, -15, -11.97)" filter="url(#Ellipse_1057)">
+        <g id="Ellipse_1057-2" data-name="Ellipse 1057" transform="translate(15 12)" fill="#f5f5f5" stroke="#707070" stroke-width="1" opacity="0.37">
+          <circle cx="23.5" cy="23.5" r="23.5" stroke="none"/>
+          <circle cx="23.5" cy="23.5" r="23" fill="none"/>
+        </g>
+      </g>
+    </g>
+    <g id="Group_18500" data-name="Group 18500" transform="translate(18.775 373.746)" opacity="0">
+      <rect id="Rectangle_8245" data-name="Rectangle 8245" width="43" height="43" rx="21.5" transform="translate(0.225 0.254)" fill="#fff" opacity="0.66"/>
+    </g>
+    <g transform="matrix(1, 0, 0, 1, 2, 360)" filter="url(#add-filled)">
+      <path id="add-filled-2" data-name="add-filled" d="M17.409,2.25A15.346,15.346,0,0,0,2.25,17.409,15.346,15.346,0,0,0,17.409,32.568,15.346,15.346,0,0,0,32.568,17.409,15.346,15.346,0,0,0,17.409,2.25Zm8.662,16.242H18.492v7.579H16.326V18.492H8.747V16.326h7.579V8.747h2.166v7.579h7.579Z" transform="translate(21.09 18.09)" fill="url(#linear-gradient)"/>
+    </g>
+  </g>
+</svg>

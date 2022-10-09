@@ -10,6 +10,12 @@ export default {
   GET_FORMS() {
     return Api().get("dispute_requests_form");
   },
+  GET_USERS(id) {
+    return Api().get(`dispute_requests_form?ads_request_id=${id}`);
+  },
+  GET_ORDERS(id) {
+    return Api().get(`dispute_requests_form?to_user_id=${id}`);
+  },
   CREATE(formData) {
     return Api().post("dispute_requests", formData);
   },
@@ -28,8 +34,10 @@ export default {
   GET_RATE(id) {
     return Api().get(`dispute_requests/${id}/rate`);
   },
-  FINISH(id) {
-    return Api().get(`dispute_requests/${id}/finish`);
+  FINISH(formData) {
+    return Api().get(
+      `dispute_requests/${formData.id}/finish?reason=${formData.reason}`
+    );
   },
   CREATE_ATTACH(form) {
     return Api().post(`dispute_requests/${form.id}/attachments`, form.data);

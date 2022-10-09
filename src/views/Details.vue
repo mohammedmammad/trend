@@ -1,31 +1,6 @@
 <template>
   <div id="app">
-    <header>
-      <div class="container">
-        <div class="w-100 d-flex justify-content-between">
-          <div class="input-group filter-box">
-            <div class="input-group-prepend">
-              <span class="input-group-text custome-action-right">
-                <font-awesome-icon icon="fa-solid fa-magnifying-glass" />
-              </span>
-            </div>
-            <input
-              type="text"
-              class="form-control"
-              aria-label="Amount (to the nearest dollar)"
-            />
-            <div class="input-group-append">
-              <span class="input-group-text custome-action-left">
-                <font-awesome-icon icon="fa-solid fa-filter" />
-              </span>
-            </div>
-          </div>
-          <button class="back-btn" @click="$router.go(-1)">
-            <font-awesome-icon icon="fa-solid fa-angle-left" />
-          </button>
-        </div>
-      </div>
-    </header>
+    <Header></Header>
     <div class="custome-nav background-white">
       <div class="container">
         <div class="d-flex justify-content-between">
@@ -46,7 +21,7 @@
           <router-link :to="`/`" class="nav-link active">
             طلبات مقدمة
           </router-link>
-          <router-link :to="`/recieve`" class="nav-link">
+          <router-link :to="`/recieve`" class="nav-link font-weight-bold">
             طلبات مستقبلة
           </router-link>
         </div>
@@ -54,66 +29,8 @@
     </div>
     <div class="orders">
       <div class="container">
-        <div class="order-card shadow mb-3 bg-white rounded">
-          <div
-            class="
-              d-flex
-              flex-wrap
-              justify-content-between
-              align-items-center
-              p-2
-            "
-          >
-            <div class="gray-color">
-              <span>رقم الطلب</span>
-              <span class="mr-2">{{ details.id }}</span>
-            </div>
-            <div class="gray-color">
-              <span>{{ details.created_at }}</span>
-            </div>
-            <div class="gray-btn background-white">
-              <span>{{ details.status_txt }}</span>
-            </div>
-          </div>
-          <div class="d-flex align-items-center mb-2 px-2">
-            <div class="img-user">
-              <img :src="details.other_user.image" alt="user" />
-            </div>
-            <div class="card-data">
-              <div class="mb-2">
-                <span>اسم المعلن :</span>
-                <span class="mr-1">{{ details.other_user.username }}</span>
-              </div>
-              <div class="main-color">
-                <span>نوع التنازع</span>
-                <span class="mr-1">/</span>
-                <span class="mr-1">{{ details.type.name }}</span>
-              </div>
-            </div>
-          </div>
-          <div class="d-flex justify-content-around px-2">
-            <div>
-              <span class="gray-color">قيمة الطلب :</span>
-              <span class="sub-main-color mr-1">{{
-                details.release_details.total
-              }}</span>
-            </div>
-            <div>
-              <span class="gray-color">قيمة طلب الاسترداد :</span>
-              <span class="orange-color mr-1">{{
-                details.release_details.released
-              }}</span>
-            </div>
-          </div>
-          <div class="d-flex justify-content-between background-white mt-2 p-2">
-            <div class="orange-color px-2">
-              <span>{{ details.ads_request.status_txt }}</span>
-            </div>
-            <div class="main-color border-right-action px-2">
-              <span class="ml-2"><u>تفاصيل طلب الاعلان</u></span>
-              <font-awesome-icon icon="fa-solid fa-share-from-square" />
-            </div>
-          </div>
+        <div @click="$router.go(-1)">
+          <Card :request="details" :showCard="true"></Card>
         </div>
         <div class="details-card active shadow mb-3 rounded">
           <h6
@@ -151,39 +68,60 @@
             </div>
             <div class="row p-2">
               <div class="col-12 mb-2">
-                <input
-                  type="text"
-                  readonly
-                  class="form-control custome-input"
-                  placeholder="ادخل عنوان الطلب"
-                  :value="details.type.name"
-                />
+                <div class="content-input">
+                  <span class="label-require">
+                    <img src="../assets/icons/star.svg" alt="*" />
+                  </span>
+                  <input
+                    type="text"
+                    readonly
+                    class="form-control custome-input gray-border"
+                    placeholder="ادخل عنوان الطلب"
+                    :value="details.type.name"
+                  />
+                </div>
               </div>
               <div class="col-4 mb-2">
-                <input
-                  type="text"
-                  readonly
-                  class="form-control custome-input"
-                  placeholder="ادخل قيمة الطلب"
-                  :value="details.id"
-                />
+                <div class="content-input">
+                  <span class="label-require">
+                    <img src="../assets/icons/star.svg" alt="*" />
+                  </span>
+                  <input
+                    type="text"
+                    readonly
+                    required
+                    class="form-control custome-input gray-border text-center"
+                    placeholder="ادخل قيمة الطلب"
+                    :value="details.id"
+                  />
+                </div>
               </div>
               <div class="col-8 mb-2">
-                <input
-                  type="text"
-                  readonly
-                  class="form-control custome-input"
-                  placeholder="ادخل الاسم "
-                  :value="details.other_user.username"
-                />
+                <div class="content-input">
+                  <span class="label-require">
+                    <img src="../assets/icons/star.svg" alt="*" />
+                  </span>
+                  <input
+                    type="text"
+                    readonly
+                    class="form-control custome-input gray-border"
+                    placeholder="ادخل الاسم "
+                    :value="details.other_user.username"
+                  />
+                </div>
               </div>
               <div class="col-12 mb-2">
-                <textarea
-                  class="form-control custome-input"
-                  readonly
-                  placeholder="ادخل تفاصيل الطلب"
-                  v-model="details.details"
-                ></textarea>
+                <div class="content-input">
+                  <span class="label-require">
+                    <img src="../assets/icons/star.svg" alt="*" />
+                  </span>
+                  <textarea
+                    class="form-control custome-input gray-border"
+                    readonly
+                    placeholder="ادخل تفاصيل الطلب"
+                    v-model="details.details"
+                  ></textarea>
+                </div>
               </div>
               <div class="col-12 my-2 main-color">
                 <h6>أدخل مبلغ طلب الاسترداد</h6>
@@ -209,25 +147,37 @@
                   }}</span>
                 </div>
                 <div>
-                  <input
-                    type="text"
-                    class="form-control special-input"
-                    placeholder="القيمة"
-                    v-model="recovery"
-                  />
+                  <div class="content-input">
+                    <span class="label-require">
+                      <img src="../assets/icons/star.svg" alt="*" />
+                    </span>
+                    <input
+                      type="text"
+                      class="form-control special-input"
+                      placeholder="القيمة"
+                      :readonly="details.status == 'finished'"
+                      v-model="recovery"
+                    />
+                  </div>
                 </div>
               </div>
-              <div class="col-12 my-2 orange-color">
-                <h6>لا يمكنك الزيادة مستقبلا على قيمة الطلب</h6>
-              </div>
-              <div class="col-12 d-flex justify-content-around mt-3">
-                <button type="button" class="main-button" @click="resend">
-                  ارسال الطلب
-                </button>
-                <button type="button" class="cancel-button" @click="resetsend">
-                  الغاء
-                </button>
-              </div>
+              <template v-if="details.status != 'finished'">
+                <div class="col-12 my-2 orange-color">
+                  <h6>لا يمكنك الزيادة مستقبلا على قيمة الطلب</h6>
+                </div>
+                <div class="col-12 d-flex justify-content-around mt-3">
+                  <button type="button" class="main-button" @click="resend">
+                    ارسال الطلب
+                  </button>
+                  <button
+                    type="button"
+                    class="cancel-button"
+                    @click="resetsend"
+                  >
+                    الغاء
+                  </button>
+                </div>
+              </template>
             </div>
           </template>
           <div class="card-shape">
@@ -272,7 +222,7 @@
                       <h6 class="mb-0 mr-2">{{ rep.from_user.username }}</h6>
                     </div>
                     <div>
-                      <small class="gray-color">اخر تعليق منذ 29 ساعة</small>
+                      <small class="gray-color">اخر تعليق منذ 29 </small>
                     </div>
                   </div>
                   <p class="main-color px-3 text-14">
@@ -302,7 +252,7 @@
                 </button>
                 <router-link
                   :to="`/history/${this.request_id}`"
-                  class="cancel-button"
+                  class="cancel-button blue-color"
                   tag="button"
                 >
                   <u>عرض سجل الردود</u>
@@ -319,7 +269,7 @@
                 </div>
                 <div class="d-flex justify-content-between">
                   <button class="special-btn" @click="addReply">
-                    <font-awesome-icon icon="fa-solid fa-paper-plane" />
+                    <img src="../assets/icons/send.svg" alt="Send" />
                     <span class="mr-2">ارسال</span>
                   </button>
                 </div>
@@ -468,7 +418,7 @@
               </li>
               <li class="d-flex justify-content-between align-items-center">
                 <div class="text d-flex align-items-center">
-                  تقييمك المعلن لك
+                  تقييم المعلن لك
                 </div>
                 <div class="w-50">
                   <rate
@@ -534,14 +484,19 @@
             </ul>
             <div class="w-100">
               <textarea
-                class="form-control custome-input custome-input-bg-white"
+                class="
+                  form-control
+                  custome-input custome-input-bg-white
+                  gray-border
+                  solid-border
+                "
                 placeholder="يمكنك اضافة تعليق موجه للطرف الاخر"
                 v-model="rate.comment"
               ></textarea>
             </div>
             <div class="d-flex justify-content-between my-3">
               <button class="special-btn" @click="addRate()">
-                <font-awesome-icon icon="fa-solid fa-paper-plane" />
+                <img src="../assets/icons/send.svg" alt="Send" />
                 <span class="mr-2">ارسال</span>
               </button>
             </div>
@@ -562,9 +517,9 @@
             <ul class="w-100 m-0 p-0 list-unstyled">
               <li class="d-flex justify-content-between align-items-center">
                 <div class="d-flex">
-                  مرحبا عزيزى ..... الغاء طلب التنازع سيؤدى الى اقفال طلب
-                  التنازع رقم ... بشكل نهائى والخاص بطلب الاعلان رقم ... ولا يحق
-                  لك فتح طلب تنازع مره اخرى خاص بطلب الاعلان هذا
+                  مرحباً عزيزي ..... اختيارك الغاء طلب التنازع سيؤدي إلى اقفال
+                  طلب التنازع رقم 0000 بشكل نهائي والخاص بطلب الإعلان رقم 000
+                  ولا يحق لك فتح طلب تنازع مرة أخرى خاص بطلب الإعلان هذا
                 </div>
               </li>
               <li class="custome-radio mt-3">
@@ -598,7 +553,8 @@
                       type="radio"
                       name="gridRadios"
                       id="gridRadios2"
-                      value="option1"
+                      value="لقد تم الحل وديا"
+                      v-model="reason"
                     />
                     <label class="form-check-label" for="gridRadios2">
                       لقد تم الحل وديا
@@ -610,7 +566,8 @@
                       type="radio"
                       name="gridRadios"
                       id="gridRadios3"
-                      value="option2"
+                      value="لقد تنازلت عن طلبى"
+                      v-model="reason"
                     />
                     <label class="form-check-label" for="gridRadios3">
                       لقد تنازلت عن طلبى
@@ -622,7 +579,8 @@
                       type="radio"
                       name="gridRadios"
                       id="gridRadios4"
-                      value="option1"
+                      value="لقد نفذ طلبى"
+                      v-model="reason"
                     />
                     <label class="form-check-label" for="gridRadios4">
                       لقد نفذ طلبى
@@ -634,7 +592,8 @@
                       type="radio"
                       name="gridRadios"
                       id="gridRadios5"
-                      value="option2"
+                      value="اخرى"
+                      v-model="reason"
                     />
                     <label class="form-check-label" for="gridRadios5">
                       اخرى
@@ -644,7 +603,13 @@
               </li>
             </ul>
             <div class="d-flex justify-content-end my-3">
-              <button class="cancel-button">حفظ</button>
+              <button
+                class="cancel-button"
+                :disabled="!reason"
+                @click="finishRequest(reason)"
+              >
+                حفظ
+              </button>
             </div>
           </div>
         </div>
@@ -655,12 +620,15 @@
 
 <script>
 import mixins from "@/mixins";
+import Card from "@/components/Card";
+import Header from "@/layout/Header";
 export default {
   name: "Details",
   mixins: [mixins],
-  components: {},
+  components: { Card, Header },
   data() {
     return {
+      reason: null,
       url: [],
       deleteFiles: [],
       request_id: null,
@@ -696,32 +664,57 @@ export default {
   },
   methods: {
     show(section) {
-      let initActives = {
-        data: false,
-        msg: false,
-        rate: false,
-        cancel: false,
-      };
-      this.showes = {
-        ...initActives,
-        [section]: true,
-      };
-      if (section == "msg") {
-        if (this.attach) {
-          this.showMsgOrAttach("attach");
-        } else {
-          this.showMsgOrAttach("msg");
+      if (this.showes[section]) {
+        this.showes = {
+          data: false,
+          msg: false,
+          rate: false,
+          cancel: false,
+        };
+      } else {
+        let initActives = {
+          data: false,
+          msg: false,
+          rate: false,
+          cancel: false,
+        };
+        this.showes = {
+          ...initActives,
+          [section]: true,
+        };
+        if (section == "msg") {
+          if (this.attach) {
+            this.showMsgOrAttach("attach");
+          } else {
+            this.showMsgOrAttach("msg");
+          }
+        } else if (section == "rate") {
+          this.getRate();
         }
-      } else if (section == "rate") {
-        this.getRate();
-      } else if (section == "cancel") {
-        this.finishRequest();
       }
     },
-    finishRequest() {
-      this.handleRequest("COMMON", "FINISH", this.request_id).then((res) => {
+    finishRequest(reason) {
+      let obj = {
+        reason,
+        id: this.request_id,
+      };
+      this.handleRequest("COMMON", "FINISH", obj).then((res) => {
         if (res.status == 200) {
-          console.log(res.data);
+          this.showes = {
+            data: false,
+            msg: false,
+            rate: false,
+            cancel: false,
+          };
+          this.$store.dispatch("STORE_SAVE_ERRORS", {
+            styled: "filled",
+            type: "success",
+            title: "عملية ناجحة",
+            message: res.message,
+          });
+          setTimeout(() => {
+            this.$store.dispatch("STORE_SAVE_ERRORS", null);
+          }, 5000);
         }
       });
     },
@@ -759,7 +752,7 @@ export default {
       } else {
         this.$store.dispatch("STORE_SAVE_ERRORS", {
           styled: "filled",
-          type: "success",
+          type: "error",
           title: "حدث خطأ",
           message: "أنت لا يمكنك اضافة تقييم",
         });
@@ -874,6 +867,9 @@ export default {
       };
       this.handleRequest("COMMON", "ADD_REPLY", form).then((res) => {
         if (res.status == 200) {
+          this.replies.unshift(res.data);
+          this.messages.reply = "";
+          this.showreplay = false;
           this.$store.dispatch("STORE_SAVE_ERRORS", {
             styled: "filled",
             type: "success",
