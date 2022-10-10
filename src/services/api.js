@@ -4,7 +4,7 @@ import i18n from "../i18n";
 export default () => {
   const token =
     localStorage.getItem("access_token") ||
-    "3772|4gHp5iEbUTYl1me4ABkb28m22izSNlvis9P0rKSA";
+    "12485|R3mT0AWgJBpmyF7ADU351fJIhuRTEair1e3pDpT3";
   let Api = axios.create({
     baseURL: "https://advertiser.cefour.com/api/v1/",
     headers: {

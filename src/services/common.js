@@ -25,6 +25,9 @@ export default {
   RESEND(formData) {
     return Api().post(`dispute_requests/${formData.id}/resend`, formData.data);
   },
+  ACCEPT(formData) {
+    return Api().get(`dispute_requests/${formData.id}/accept`);
+  },
   GET_ATTACHMENTS(id) {
     return Api().get(`dispute_requests/${id}/attachments`);
   },

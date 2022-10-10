@@ -204,12 +204,17 @@
                 >
               </div>
               <div :class="{ 'is-invalid': $v.form.recovery.$error }">
-                <input
-                  type="text"
-                  class="form-control special-input"
-                  placeholder="......."
-                  v-model.trim="$v.form.recovery.$model"
-                />
+                <div class="content-input">
+                  <span class="label-require dropdown">
+                    <img src="../assets/icons/star.svg" alt="*" />
+                  </span>
+                  <input
+                    type="text"
+                    class="form-control special-input"
+                    placeholder="......."
+                    v-model.trim="$v.form.recovery.$model"
+                  />
+                </div>
               </div>
             </div>
             <div class="col-12 my-2 orange-color">
@@ -384,15 +389,7 @@ export default {
       if (this.$v.$invalid) return false;
       this.handleRequest("COMMON", "CREATE", formData).then((res) => {
         if (res.status == 200) {
-          this.$store.dispatch("STORE_SAVE_ERRORS", {
-            styled: "filled",
-            type: "success",
-            title: "عملية ناجحة",
-            message: res.message,
-          });
-          setTimeout(() => {
-            this.$store.dispatch("STORE_SAVE_ERRORS", null);
-          }, 5000);
+          this.$router.push({ name: "Details", params: { id: res.data.id } });
         }
       });
     },

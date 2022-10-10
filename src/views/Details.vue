@@ -18,10 +18,26 @@
     <div class="custome-nav background-white">
       <div class="container">
         <div class="d-flex justify-content-between">
-          <router-link :to="`/`" class="nav-link active">
+          <router-link
+            :to="`/`"
+            class="nav-link"
+            :class="{
+              active: Object.keys(details).length != 0 && details.from_me,
+              'font-weight-bold':
+                Object.keys(details).length != 0 && !details.from_me,
+            }"
+          >
             طلبات مقدمة
           </router-link>
-          <router-link :to="`/recieve`" class="nav-link font-weight-bold">
+          <router-link
+            :to="`/recieve`"
+            class="nav-link"
+            :class="{
+              active: Object.keys(details).length != 0 && !details.from_me,
+              'font-weight-bold':
+                Object.keys(details).length != 0 && details.from_me,
+            }"
+          >
             طلبات مستقبلة
           </router-link>
         </div>
@@ -123,8 +139,16 @@
                   ></textarea>
                 </div>
               </div>
-              <div class="col-12 my-2 main-color">
+              <div class="col-12 my-2 main-color" v-if="details.from_me">
                 <h6>أدخل مبلغ طلب الاسترداد</h6>
+              </div>
+              <div class="col-12 my-2 gray-color" v-else>
+                <h6>
+                  وافق على الطلب أو أدخل قيمة أقل من
+                  <span class="text-dark">{{
+                    details.release_details.remaining + 1
+                  }}</span>
+                </h6>
               </div>
               <div
                 class="
@@ -163,9 +187,17 @@
               </div>
               <template v-if="details.status != 'finished'">
                 <div class="col-12 my-2 orange-color">
-                  <h6>لا يمكنك الزيادة مستقبلا على قيمة الطلب</h6>
+                  <h6 v-if="details.from_me">
+                    لا يمكنك الزيادة مستقبلا على قيمة طلب الاسترداد هذا
+                  </h6>
+                  <h6 v-else>
+                    لا يمكنك الزيادة مستقبلا على أى قيمة تقبلها الان
+                  </h6>
                 </div>
-                <div class="col-12 d-flex justify-content-around mt-3">
+                <div
+                  class="col-12 d-flex justify-content-around mt-3"
+                  v-if="details.from_me"
+                >
                   <button type="button" class="main-button" @click="resend">
                     ارسال الطلب
                   </button>
@@ -177,13 +209,18 @@
                     الغاء
                   </button>
                 </div>
+                <div class="col-12 d-flex justify-content-around mt-3" v-else>
+                  <button type="button" class="cancel-button" @click="accept">
+                    قبول الطلب
+                  </button>
+                  <button type="button" class="main-button" @click="resend">
+                    ارسال عرض اخر
+                  </button>
+                </div>
               </template>
             </div>
           </template>
-          <div class="card-shape">
-            <div class="border-top"></div>
-            <div class="border-bottom"></div>
-          </div>
+          <CardShape></CardShape>
         </div>
         <div class="details-card active shadow mb-3 rounded">
           <h6
@@ -222,7 +259,7 @@
                       <h6 class="mb-0 mr-2">{{ rep.from_user.username }}</h6>
                     </div>
                     <div>
-                      <small class="gray-color">اخر تعليق منذ 29 </small>
+                      <small class="gray-color">{{ rep.created_at }}</small>
                     </div>
                   </div>
                   <p class="main-color px-3 text-14">
@@ -396,10 +433,7 @@
               </div>
             </div>
           </div>
-          <div class="card-shape">
-            <div class="border-top"></div>
-            <div class="border-bottom"></div>
-          </div>
+          <CardShape></CardShape>
         </div>
         <div class="details-card shadow mb-3 rounded active">
           <h6
@@ -501,12 +535,9 @@
               </button>
             </div>
           </div>
-          <div class="card-shape">
-            <div class="border-top"></div>
-            <div class="border-bottom"></div>
-          </div>
+          <CardShape></CardShape>
         </div>
-        <div class="shadow mb-3 rounded active">
+        <div class="shadow mb-3 rounded active" v-if="details.from_me">
           <h6
             class="title text-center text-20 text-white m-0 py-2 bg-warning"
             @click="show('cancel')"
@@ -621,13 +652,15 @@
 <script>
 import mixins from "@/mixins";
 import Card from "@/components/Card";
+import CardShape from "@/components/Card-Shape";
 import Header from "@/layout/Header";
 export default {
   name: "Details",
   mixins: [mixins],
-  components: { Card, Header },
+  components: { Card, Header, CardShape },
   data() {
     return {
+      prvPage: null,
       reason: null,
       url: [],
       deleteFiles: [],
@@ -803,6 +836,24 @@ export default {
         }
       });
     },
+    accept() {
+      let formdata = {
+        id: this.request_id,
+      };
+      this.handleRequest("COMMON", "ACCEPT", formdata).then((res) => {
+        if (res.status == 200) {
+          this.$store.dispatch("STORE_SAVE_ERRORS", {
+            styled: "filled",
+            type: "success",
+            title: "عملية ناجحة",
+            message: res.message,
+          });
+          setTimeout(() => {
+            this.$store.dispatch("STORE_SAVE_ERRORS", null);
+          }, 5000);
+        }
+      });
+    },
     resetsend() {
       this.recovery = this.details.recovery;
     },
@@ -810,9 +861,19 @@ export default {
       this.handleRequest("COMMON", "REQUEST_DETAILS", this.request_id).then(
         (res) => {
           if ((res.status == 200) & (res.data != null)) {
-            console.log(res.data);
             this.details = res.data.details;
             this.recovery = this.details.recovery;
+            if (this.prvPage == "Create") {
+              this.$store.dispatch("STORE_SAVE_ERRORS", {
+                styled: "filled",
+                type: "success",
+                title: "عملية ناجحة",
+                message: "تم انشاء طلب التنازع بنجاح",
+              });
+              setTimeout(() => {
+                this.$store.dispatch("STORE_SAVE_ERRORS", null);
+              }, 5000);
+            }
           }
         }
       );
@@ -885,6 +946,11 @@ export default {
   },
   watch: {},
   computed: {},
+  beforeRouteEnter: (to, from, next) => {
+    next((vm) => {
+      vm.prvPage = from.name;
+    });
+  },
   mounted() {
     this.request_id = this.$route.params.id;
     this.getRequest();

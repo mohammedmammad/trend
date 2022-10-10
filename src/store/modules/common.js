@@ -5,7 +5,7 @@ const ticket = {
     // token: localStorage.getItem("access_token") || null,
     token:
       localStorage.getItem("access_token") ||
-      "3772|4gHp5iEbUTYl1me4ABkb28m22izSNlvis9P0rKSA",
+      "12485|R3mT0AWgJBpmyF7ADU351fJIhuRTEair1e3pDpT3",
   },
   getters: {
     loggedIn: (state) => state.token !== null,
@@ -25,6 +25,7 @@ const ticket = {
               case "CREATE":
               case "REQUEST_DETAILS":
               case "RESEND":
+              case "ACCEPT":
               case "CREATE_ATTACH":
               case "GET_MESSAGES":
               case "ADD_REPLY":

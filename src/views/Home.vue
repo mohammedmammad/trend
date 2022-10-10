@@ -22,7 +22,7 @@
         </div>
       </div>
     </scroll-fixed-header>
-    <div class="orders">
+    <div class="orders" v-if="!loading">
       <div class="container">
         <template v-if="requestes.length > 0">
           <Card
@@ -58,7 +58,11 @@ export default {
     };
   },
   watch: {},
-  computed: {},
+  computed: {
+    loading() {
+      return this.$store.getters.loading;
+    },
+  },
   methods: {
     getRequestes() {
       this.handleRequest("COMMON", "GET_REQUESTES").then((res) => {
