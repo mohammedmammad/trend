@@ -198,14 +198,10 @@
                   class="col-12 d-flex justify-content-around mt-3"
                   v-if="details.from_me"
                 >
-                  <button type="button" class="main-button" @click="resend">
+                  <button type="button" class="cancel-button" @click="resend">
                     ارسال الطلب
                   </button>
-                  <button
-                    type="button"
-                    class="cancel-button"
-                    @click="resetsend"
-                  >
+                  <button type="button" class="main-button" @click="resetsend">
                     الغاء
                   </button>
                 </div>
@@ -313,24 +309,28 @@
               </template>
             </div>
             <div class="row mt-3" v-else>
-              <!-- <div class="col-12">
-                <div class="d-flex justify-content-between align-items-center">
-                  <div class="d-flex align-items-center my-3">
-                    <div class="img-user">
-                      <img
-                        src="https://vid.alarabiya.net/images/2016/05/11/e49eb47a-620e-4537-8d8a-5617fb37edc4/e49eb47a-620e-4537-8d8a-5617fb37edc4_16x9_1200x676.jpg?width=1138"
-                        alt="user"
+              <template v-if="attachments.length > 0">
+                <div class="col-12">
+                  <div class="row" v-for="file in attachments" :key="file.id">
+                    <div class="col-9 mb-2">
+                      <input
+                        readonly
+                        type="text"
+                        class="
+                          form-control
+                          custome-input custome-input-bg-white
+                        "
+                        placeholder="أدخل اسم/وصف/رابط ... المرافق"
+                        :value="file.file_name"
                       />
                     </div>
-                    <h6 class="mb-0 mr-2">محمد حماد سند حماد</h6>
-                  </div>
-                  <div>
-                    <small class="gray-color">اخر تعليق منذ 29 ساعة</small>
+                    <div class="col-3 mb-2">
+                      <div class="content-upload-image">
+                        <img :src="file.path" />
+                      </div>
+                    </div>
                   </div>
                 </div>
-              </div> -->
-              <template v-if="attachments.length > 0">
-                <div></div>
               </template>
               <template v-else>
                 <div class="col-12">
@@ -809,7 +809,7 @@ export default {
         this.handleRequest("COMMON", "GET_ATTACHMENTS", this.request_id).then(
           (res) => {
             if (res.status == 200) {
-              this.attachments = res.data;
+              this.attachments = res.data.data;
             }
           }
         );

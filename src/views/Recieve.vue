@@ -1,7 +1,7 @@
 <template>
   <div id="Home">
     <scroll-fixed-header :fixed.sync="fixed" :threshold="56">
-      <Header :searchable="true"></Header>
+      <Header :searchable="true" @search="search($event)"></Header>
       <div class="custome-nav background-white">
         <div class="container">
           <div class="d-flex justify-content-between">
@@ -66,6 +66,15 @@ export default {
           this.requestes = res.data;
         }
       });
+    },
+    search(keyword) {
+      this.handleRequest("COMMON", "GET_RECIEVED_REQUESTES", keyword).then(
+        (res) => {
+          if ((res.status == 200) & (res.data != null)) {
+            this.requestes = res.data;
+          }
+        }
+      );
     },
   },
   mounted() {

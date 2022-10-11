@@ -12,10 +12,11 @@
             </div>
             <input
               type="text"
+              v-model="keyword"
               class="form-control"
               placeholder="ابحث برقم الطلب أو طرف العلاقة أو قيمة"
             />
-            <div class="input-group-append">
+            <div class="input-group-append" @click="search">
               <span class="input-group-text custome-action-left">
                 <img src="../assets/icons/filter.svg" alt="Filter" />
               </span>
@@ -38,9 +39,18 @@ export default {
       type: Boolean,
     },
   },
+  data() {
+    return {
+      keyword: "",
+    };
+  },
   mounted() {},
   computed: {},
-  methods: {},
+  methods: {
+    search() {
+      this.$emit("search", this.keyword);
+    },
+  },
 };
 </script>
 

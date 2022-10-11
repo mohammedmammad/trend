@@ -1,6 +1,6 @@
 <template>
   <div id="create">
-    <Header :searchable="true"></Header>
+    <Header></Header>
     <div class="orders p-0">
       <div
         class="details-card active shadow mb-3 rounded h-100"
@@ -297,10 +297,10 @@
               </div>
             </div>
             <div class="col-12 d-flex justify-content-around mt-3">
-              <button type="button" class="main-button" @click="create">
+              <button type="button" class="cancel-button" @click="create">
                 حفظ
               </button>
-              <button type="button" class="cancel-button" @click="reset">
+              <button type="button" class="main-button" @click="reset">
                 الغاء
               </button>
             </div>
