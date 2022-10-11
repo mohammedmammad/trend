@@ -108,7 +108,7 @@
                     required
                     class="form-control custome-input gray-border text-center"
                     placeholder="ادخل قيمة الطلب"
-                    :value="details.id"
+                    :value="details.ads_request.id"
                   />
                 </div>
               </div>

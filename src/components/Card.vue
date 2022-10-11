@@ -6,7 +6,7 @@
       >
         <div class="gray-color">
           <span>رقم الطلب</span>
-          <span class="mr-2">{{ request.id }}</span>
+          <span class="mr-2">{{ request.ads_request.id }}</span>
         </div>
         <div class="gray-color">
           <span>{{ request.created_at }}</span>
